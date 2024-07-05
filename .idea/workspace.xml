@@ -18,7 +18,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -35,6 +35,7 @@
     "Python.app.executor": "Run",
     "Python.pr.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/syung-hyun/intelligent-web",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -75,6 +76,7 @@
       <workItem from="1720142205897" duration="23000" />
       <workItem from="1720142231321" duration="3578000" />
       <workItem from="1720156674849" duration="362000" />
+      <workItem from="1720157075589" duration="785000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />

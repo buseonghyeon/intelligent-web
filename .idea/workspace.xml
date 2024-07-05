@@ -25,6 +25,7 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2io1dPfbhm4bpONDaYABwvoxQei" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -34,7 +35,6 @@
     "Python.app.executor": "Run",
     "Python.pr.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/syung-hyun/intelligent-web",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -74,6 +74,7 @@
       <updated>1720142204306</updated>
       <workItem from="1720142205897" duration="23000" />
       <workItem from="1720142231321" duration="3578000" />
+      <workItem from="1720156674849" duration="362000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />

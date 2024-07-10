@@ -1,0 +1,41 @@
+/* Navbar.css */
+@font-face {
+    font-family: "Ownglyph_UNZ-Rg";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2")
+    format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ced8f6;
+    color: white;
+}
+
+.logo {
+    width: 170px;
+    height: 50px;
+}
+
+.menu a {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #ced8f6;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Ownglyph_UNZ-Rg", sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #e0e6f8; /* 연한 색상 */
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+}

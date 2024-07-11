@@ -14,20 +14,23 @@ function App() {
         e.preventDefault();
         setImageUrl(null);  // Reset image URL when a new request is made
 
+        const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID 가져오기
+
         try {
             const response = await axios.post("http://localhost:5000/translate", {
+                userId, // 사용자 ID 포함
                 text: inputText,
             });
 
             setResult(response.data);
 
             // Automatically generate image after translation
-            if (response.data && response.data["Example Sentences"]) {
+            if (response.data && response.data["Example Sentence"]) {
                 try {
                     const imageResponse = await axios.post(
                         "http://localhost:5000/generate-image",
                         {
-                            example_sentence: response.data["Example Sentences"],
+                            example_sentence: response.data["Example Sentence"],
                         }
                     );
 
@@ -66,7 +69,7 @@ function App() {
                         <strong>Synonyms:</strong> {result.Synonyms}
                     </p>
                     <p>
-                        <strong>Example Sentences:</strong> {result["Example Sentences"]}
+                        <strong>Example Sentence:</strong> {result["Example Sentence"]}
                     </p>
                     <p>
                         <strong>Translation in Korean:</strong>{" "}

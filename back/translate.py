@@ -1,15 +1,38 @@
 from flask import request, jsonify
 import openai
 from Database_Server import app, db, Category
+import re
 
 # OpenAI API Key 설정
 openai.api_key = ""
+
+def is_english(text):
+    """입력된 텍스트가 영어인지 확인"""
+    return bool(re.match(r'^[a-zA-Z\s]+$', text))
 
 @app.route('/translate', methods=['POST'])
 def translate_text():
     data = request.get_json()
     user_id = data.get('userId')
     user_text = data['text']
+
+    # 입력된 단어가 이미 존재하는지 확인
+    existing_entry = None
+    if is_english(user_text):
+        existing_entry = Category.query.filter_by(english=user_text).first()
+    else:
+        existing_entry = Category.query.filter_by(korean=user_text).first()
+
+    if existing_entry:
+        # 기존 데이터 반환
+        return jsonify({
+            "Translation": existing_entry.english if not is_english(user_text) else existing_entry.korean,
+            "Category": existing_entry.category,
+            "Synonyms": existing_entry.synonym,
+            "Example Sentence": existing_entry.example_sentence,
+            "Translation in Korean": existing_entry.translation_in_korean,
+            "image_url": existing_entry.image
+        })
 
     try:
         completion = openai.ChatCompletion.create(
@@ -114,13 +137,29 @@ Translation in Korean: [Korean translation of example sentence]
             image_url = image_response['data'][0]['url']
 
             # Save to database
-            new_category = Category(
-                user_id=user_id,
-                category=parts["Category"],
-                korean=user_text,
-                english=parts["Translation"],
-                image=image_url
-            )
+            if is_english(user_text):
+                new_category = Category(
+                    user_id=user_id,
+                    category=parts["Category"],
+                    korean=parts["Translation"],
+                    english=user_text,
+                    image=image_url,
+                    synonym=parts["Synonyms"],
+                    example_sentence=parts["Example Sentence"],
+                    translation_in_korean=parts["Translation in Korean"]
+                )
+            else:
+                new_category = Category(
+                    user_id=user_id,
+                    category=parts["Category"],
+                    korean=user_text,
+                    english=parts["Translation"],
+                    image=image_url,
+                    synonym=parts["Synonyms"],
+                    example_sentence=parts["Example Sentence"],
+                    translation_in_korean=parts["Translation in Korean"]
+                )
+
             db.session.add(new_category)
             db.session.commit()
 

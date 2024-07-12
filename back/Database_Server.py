@@ -28,3 +28,6 @@ class Category(db.Model):
     korean = db.Column(db.String(256), nullable=False)
     english = db.Column(db.String(256), nullable=False)
     image = db.Column(db.String(512), nullable=True)
+    synonym = db.Column(db.String(256), nullable=True)
+    example_sentence = db.Column(db.String(512), nullable=True)
+    translation_in_korean = db.Column(db.String(512), nullable=True)

@@ -30,7 +30,7 @@ function Home() {
     };
 
     return (
-        <>
+        <body>
             <Navbar />
             <div className="logo-container">
                 <img src={"/images/logo.png"} alt="WALA Logo" className="logo-home" />
@@ -47,7 +47,7 @@ function Home() {
                 </button>
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-        </>
+        </body>
     );
 }
 

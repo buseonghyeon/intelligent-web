@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'Ownglyph_UNZ-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.logo-home {
+    width: 500px;
+    height: auto;
+}
+
+.search-container-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.search-container-home input {
+    font-family: 'Ownglyph_UNZ-Rg';
+    padding: 15px;
+    width: 300px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    transition: border-color 0.3s;
+}
+
+.search-container-home input:focus {
+    border-color: #333;
+}
+
+.search-button-home {
+    padding: 15px;
+    margin-left: 5px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.search-button-home:hover {
+    background-color: #e0e6f8;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}

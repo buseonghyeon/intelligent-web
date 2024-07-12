@@ -17,7 +17,7 @@ const SignInForm = ({ toggle }) => {
             console.log('Login successful', response.data);
             alert('Login successful');
             localStorage.setItem('userId', id);
-            navigate('/app');
+            navigate('/home');
         } catch (error) {
             console.error('There was an error logging in!', error);
             alert('Error logging in');

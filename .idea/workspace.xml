@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
         <option value="CSS File" />
       </list>
     </option>
@@ -101,7 +101,7 @@
       <workItem from="1720157075589" duration="18487000" />
       <workItem from="1720571736327" duration="14854000" />
       <workItem from="1720592898590" duration="1056000" />
-      <workItem from="1720659993992" duration="41757000" />
+      <workItem from="1720659993992" duration="47442000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />

@@ -4,10 +4,12 @@ import axios from 'axios';
 import './css/Home.css';
 import './App.css';
 import Navbar from './components/Navbar';
+import HomeMain from './components/HomeMain';
 
 function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [error, setError] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate();
 
     const handleSearch = async (e) => {
@@ -29,12 +31,13 @@ function Home() {
         }
     };
 
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
+
     return (
-        <body>
+        <div>
             <Navbar />
-            <div className="logo-container">
-                <img src={"/images/logo.png"} alt="WALA Logo" className="logo-home" />
-            </div>
             <div className="search-container-home">
                 <input
                     type="text"
@@ -46,8 +49,9 @@ function Home() {
                     <span role="img" aria-label="search">🖱️</span>
                 </button>
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </body>
+            {error && <p className="error-message">{error}</p>}
+            <HomeMain />
+        </div>
     );
 }
 

@@ -9,6 +9,14 @@ import login
 import register
 import generate_image
 import translate
+import search_log
+
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    user_id = request.args.get('userId')
+    categories = Category.query.filter_by(user_id=user_id).all()
+    categories_list = [{"english": c.english, "korean": c.korean, "image": c.image} for c in categories]
+    return jsonify(categories_list)
 
 if __name__ == '__main__':
     with app.app_context():

@@ -1,26 +1,17 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from datetime import datetime
+from flask_cors import CORS
 
 app = Flask(__name__)
-
-# MySQL database configuration
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost/Intelligent-web-db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-# Define the User model
-class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.String(255), primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(255), nullable=False)
 
-# Define the Category model
 class Category(db.Model):
     __tablename__ = 'Category'
     id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +25,13 @@ class Category(db.Model):
     translation_in_korean = db.Column(db.String(512), nullable=True)
     definition = db.Column(db.String(1024), nullable=True)
     synonym_definition = db.Column(db.String(1024), nullable=True)
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)  # Add the date column
+
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    user_id = request.args.get('userId')
+    categories = Category.query.filter_by(user_id=user_id).all()
+    categories_list = [{"english": c.english, "korean": c.korean, "image": c.image} for c in categories]
+    return jsonify(categories_list)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
         <option value="CSS File" />
       </list>
     </option>
@@ -72,11 +72,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\syung-hyun\intelligent-web\front\src\css\Mainpage" />
       <recent name="C:\Users\syung-hyun\intelligent-web\front\src\css\Login" />
       <recent name="C:\Users\syung-hyun\intelligent-web\front\src\components\Login" />
       <recent name="C:\Users\syung-hyun\intelligent-web\front\public\images" />
       <recent name="C:\Users\syung-hyun\intelligent-web\front\public" />
-      <recent name="C:\Users\syung-hyun\intelligent-web\back\venv" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -101,7 +101,7 @@
       <workItem from="1720157075589" duration="18487000" />
       <workItem from="1720571736327" duration="14854000" />
       <workItem from="1720592898590" duration="1056000" />
-      <workItem from="1720659993992" duration="26546000" />
+      <workItem from="1720659993992" duration="41757000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />

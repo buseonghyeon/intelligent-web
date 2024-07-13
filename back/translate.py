@@ -10,6 +10,26 @@ def is_english(text):
     """입력된 텍스트가 영어인지 확인"""
     return bool(re.match(r'^[a-zA-Z\s]+$', text))
 
+def get_image(example_sentence):
+    """이미지 생성 요청을 캐싱하여 요청 빈도를 줄입니다."""
+    try:
+        # Check if the example sentence already has a cached image
+        existing_entry = Category.query.filter_by(example_sentence=example_sentence).first()
+        if existing_entry and existing_entry.image:
+            return existing_entry.image
+
+        # Generate image if not cached
+        image_response = openai.Image.create(
+            prompt=example_sentence,
+            n=1,
+            size="512x512"
+        )
+        image_url = image_response['data'][0]['url']
+        return image_url
+    except Exception as e:
+        print(f"Error generating image: {e}")
+        return None
+
 @app.route('/translate', methods=['POST'])
 def translate_text():
     data = request.get_json()
@@ -31,7 +51,9 @@ def translate_text():
             "Synonyms": existing_entry.synonym,
             "Example Sentence": existing_entry.example_sentence,
             "Translation in Korean": existing_entry.translation_in_korean,
-            "image_url": existing_entry.image
+            "image_url": existing_entry.image,
+            "Definition": existing_entry.definition,
+            "Synonym Definition": existing_entry.synonym_definition,
         })
 
     try:
@@ -47,10 +69,10 @@ Task 1: Translation
 
 If the word entered by the user is in English, translate it to Korean.
 Else if the word entered by the user is in Korean, translate it to English.
+
 Task 2: Classification
 
 Classify the English words (entered by the user or translated) according to their parts of speech.
-
 Further classify them according to the suggested category. Only classify words within the given categories:
 
 Categories:
@@ -120,21 +142,64 @@ Translation in Korean: [Korean translation of example sentence]
             if None in parts.values():
                 raise IndexError("Not all parts were found in the response content.")
 
+            # Fetch definitions for the translation and synonym
+            definition_response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """
+Role: You are a dictionary that provides definitions for words.
+
+Task: Provide a brief definition for the given word only korean.
+
+Output Format:
+Definition: [Definition of the word]
+                        """
+                    },
+                    {
+                        "role": "user",
+                        "content": parts["Translation"],
+                    },
+                ],
+            )
+            translation_definition = definition_response.choices[0].message['content'].strip()
+
+            synonym_definition_response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """
+Role: You are a dictionary that provides definitions for words.
+
+Task: Provide a brief definition for the given word only korean.
+
+Output Format:
+Definition: [Definition of the word]
+                        """
+                    },
+                    {
+                        "role": "user",
+                        "content": parts["Synonyms"],
+                    },
+                ],
+            )
+            synonym_definition = synonym_definition_response.choices[0].message['content'].strip()
+
             output_json = {
                 "Translation": parts["Translation"],
                 "Category": parts["Category"],
                 "Synonyms": parts["Synonyms"],
                 "Example Sentence": parts["Example Sentence"],
                 "Translation in Korean": parts["Translation in Korean"],
+                "Definition": translation_definition,
+                "Synonym Definition": synonym_definition,
             }
 
             # Generate image based on example sentence
-            image_response = openai.Image.create(
-                prompt=parts["Example Sentence"],
-                n=1,
-                size="512x512"
-            )
-            image_url = image_response['data'][0]['url']
+            image_url = get_image(parts["Example Sentence"])
+            output_json["image_url"] = image_url
 
             # Save to database
             if is_english(user_text):
@@ -146,7 +211,9 @@ Translation in Korean: [Korean translation of example sentence]
                     image=image_url,
                     synonym=parts["Synonyms"],
                     example_sentence=parts["Example Sentence"],
-                    translation_in_korean=parts["Translation in Korean"]
+                    translation_in_korean=parts["Translation in Korean"],
+                    definition=translation_definition,
+                    synonym_definition=synonym_definition,
                 )
             else:
                 new_category = Category(
@@ -157,13 +224,13 @@ Translation in Korean: [Korean translation of example sentence]
                     image=image_url,
                     synonym=parts["Synonyms"],
                     example_sentence=parts["Example Sentence"],
-                    translation_in_korean=parts["Translation in Korean"]
+                    translation_in_korean=parts["Translation in Korean"],
+                    definition=translation_definition,
+                    synonym_definition=synonym_definition,
                 )
 
             db.session.add(new_category)
             db.session.commit()
-
-            output_json["image_url"] = image_url
 
         except (IndexError, AttributeError) as e:
             print(f"Error parsing response content: {e}")

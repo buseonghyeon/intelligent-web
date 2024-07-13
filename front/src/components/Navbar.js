@@ -6,10 +6,9 @@ const Navbar = () => {
         <nav className="navbar">
             <div><img className="logo" src={"/images/logo.png"}></img></div>
             <div className="menu">
-                <a href={"http://localhost:3000"}>Menu 1</a>
-                <a href={"#"}>Menu 2</a>
-                <a href={"#"}>Menu 3</a>
-                <a href={"#"}>Menu 4</a>
+                <a href={"http://localhost:3000/home"}>Home</a>
+                <a href={"http://localhost:3000/mystudy"}>Study</a>
+                <a href={"#"}>Mypage</a>
             </div>
         </nav>
     );

@@ -1,3 +1,4 @@
+수정전Home.css
 @font-face {
     font-family: 'Ownglyph_UNZ-Rg';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2') format('woff2');
@@ -60,4 +61,9 @@ body {
     color: black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-1px);
+}
+
+.error-message {
+    color: red;
+    margin-top: 20px;
 }

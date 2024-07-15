@@ -1,77 +1,139 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body.game-page {
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;  /* Background color set to white */
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mini-game {
+  text-align: center;
+  background-color: #CED8F6;
+  padding: 20px;
+  width: 90vw;
+  max-width: 1200px;
+  max-height: 90vh; /* 세로 크기 제한 추가 */
+  border: 2px solid #CED8F6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.mini-game h1, .mini-game h2 {
+  margin: 10px 0;
+  color: #333;
+}
+
 .game-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: #f0f0f0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Navbar를 위에 두기 위해 flex-start */
+  position: relative;
+  height: 60vh; /* 세로 크기 조정 */
+  width: 100%;
+  background-color: #EFF8FB;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #EFF8FB;
+  margin-bottom: 20px; /* 입력 창과의 간격 추가 */
 }
 
-.game-content {
-    width: 80%;
-    height: 80vh;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    margin-top: 20px;
-
+.mini-game input[type="text"] {
+  font-size: 24px;
+  padding: 10px;
+  width: 60%; /* 크기 조정 */
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px; /* 입력 창 아래 간격 추가 */
+  display: inline-block; /* 인라인 블록으로 변경 */
+  vertical-align: middle; /* 수직 정렬 */
 }
 
-.score-timer-container {
-    position: absolute;
-    top: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+.mini-game input[type="text"]:focus {
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  outline: none;
 }
 
-.score, .timer {
-    font-size: 20px;
-    font-weight: bold;
+.mini-game p {
+  font-size: 24px;
+  color: green;
+  margin-top: 10px;
+  display: inline-block; /* 인라인 블록으로 변경 */
+  vertical-align: middle; /* 수직 정렬 */
+  margin-left: 10px; /* 입력 창과의 간격 추가 */
 }
 
-.input-box {
-    width: 300px;
-    padding: 10px;
-    font-size: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    margin-top: 20px;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+.falling-word-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .falling-word {
-    position: absolute;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+  font-size: 24px;
+  color: #333;
+  background-color: #B0E0E6; /* 로봇 테마에 맞는 색상 */
+  border: 2px solid #5F9EA0; /* 로봇 테마에 맞는 색상 */
+  border-radius: 10px; /* 모서리를 더 둥글게 */
+  padding: 5px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 더 강조 */
+  white-space: nowrap;
 }
 
-.start-button {
-    padding: 10px 20px;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    position: absolute;
-    bottom: 50px;
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
 }
 
-.start-button:hover {
-    background-color: #0056b3;
+.falling-word {
+  animation: fall 20s linear infinite;
+}
+
+/* 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경 어둡게 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+button {
+  padding: 15px 30px; /* 버튼 크기 조정 */
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #e0e6f8; /* 메인 페이지 색상에 맞춤 */
+  color: black;
+  border-radius: 25px; /* 둥근 모서리 */
+  transition: background-color 0.3s, transform 0.3s; /* 애니메이션 추가 */
+}
+
+button:hover {
+  background-color: #ced8f6; /* 버튼 호버 색상 변경 */
+  transform: scale(1.1); /* 호버 시 크기 확대 */
 }

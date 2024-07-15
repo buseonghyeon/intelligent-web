@@ -1,134 +1,179 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/Game.css';
 import Navbar from "./components/Navbar";
 
+const generateRandomWord = (words) => {
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex].english; // 영어 단어를 사용
+};
+
+const generateRandomPosition = () => {
+    return Math.random() * 90; // 0% to 90% from the left
+};
 
 const Game = () => {
     const [words, setWords] = useState([]);
     const [fallingWords, setFallingWords] = useState([]);
-    const [input, setInput] = useState('');
+    const [typedWord, setTypedWord] = useState("");
     const [score, setScore] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(60);
-    const [speed, setSpeed] = useState(0.5); // 속도 초기값을 작게 설정
+    const [message, setMessage] = useState("");
     const [isGameStarted, setIsGameStarted] = useState(false);
-    const gameContainerRef = useRef(null);
+    const [timeLeft, setTimeLeft] = useState(60); // 1분 타이머
+    const [gameOver, setGameOver] = useState(false); // 게임 종료 상태
 
-    useEffect(() => {
-        const fetchWords = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/words');
-                setWords(response.data);
-            } catch (error) {
-                console.error('Error fetching words:', error);
-            }
-        };
+    // 단어를 데이터베이스에서 가져오는 함수
+    const fetchWords = async () => {
+        try {
+            const userId = localStorage.getItem('userId'); // user_id를 로컬스토리지에서 가져옴
+            const response = await axios.get(`http://localhost:5000/game-words?user_id=${userId}`);
+            setWords(response.data);
+        } catch (error) {
+            console.error('Error fetching words:', error);
+        }
+    };
 
-        fetchWords();
-    }, []);
+    // 게임을 시작할 때 단어를 가져오는 함수
+    const startGame = async () => {
+        await fetchWords(); // 게임 시작 시 단어를 가져옴
+        setIsGameStarted(true);
+        setGameOver(false);
+        setFallingWords([]);
+        setTypedWord("");
+        setScore(0);
+        setMessage("");
+        setTimeLeft(60); // 타이머 초기화
+    };
 
+    // 타이머 설정
     useEffect(() => {
         if (isGameStarted && timeLeft > 0) {
             const timer = setInterval(() => {
-                setTimeLeft(timeLeft - 1);
-                setSpeed(speed + 0.05); // 속도 증가를 더 천천히 설정
+                setTimeLeft(prevTime => prevTime - 1);
             }, 1000);
             return () => clearInterval(timer);
         } else if (timeLeft === 0) {
-            alert(`Time's up! Your score is ${score}`);
             setIsGameStarted(false);
+            setGameOver(true);
+            setMessage("시간 종료! ⏰");
         }
-    }, [timeLeft, speed, isGameStarted, score]);
+    }, [isGameStarted, timeLeft]);
 
+    // 단어 생성 및 이동을 처리하는 useEffect
     useEffect(() => {
+        let wordGenerationInterval;
+        let fallingInterval;
+
         if (isGameStarted) {
-            const gameInterval = setInterval(() => {
-                if (timeLeft > 0 && words.length > 0) {
-                    let word;
-                    let left;
-                    let overlapping;
+            wordGenerationInterval = setInterval(() => {
+                setFallingWords(fallingWords => {
+                    if (words.length > 0) {
+                        const newWords = [];
+                        const wordCount = Math.floor(Math.random() * 3) + 1; // 1에서 3개의 단어 생성
+                        for (let i = 0; i < wordCount; i++) {
+                            const newWord = {
+                                word: words[Math.floor(Math.random() * words.length)].english, // 영어 단어를 사용
+                                position: 0,
+                                speed: Math.random() * 0.5 + 1.0, // 더 느린 속도 (1.0에서 1.5 사이)
+                                left: generateRandomPosition()
+                            };
+                            newWords.push(newWord);
+                        }
+                        return [...fallingWords, ...newWords];
+                    }
+                    return fallingWords;
+                });
+            }, 4000); // 단어 생성 주기 (4초마다 생성)
 
-                    do {
-                        word = words[Math.floor(Math.random() * words.length)];
-                        left = Math.random() * 80; // 랜덤으로 위치 설정
-                        overlapping = fallingWords.some(fallingWord =>
-                            Math.abs(fallingWord.left - left) < 10
-                        );
-                    } while (overlapping);
-
-                    setFallingWords((prevWords) => [...prevWords, { text: word, top: 0, left }]);
-                }
-            }, 1000); // 단어 생성 주기를 더 길게 설정
-
-            return () => clearInterval(gameInterval);
-        }
-    }, [words, timeLeft, isGameStarted, fallingWords]);
-
-    useEffect(() => {
-        if (isGameStarted) {
-            const moveWords = setInterval(() => {
-                setFallingWords((prevWords) =>
-                    prevWords.map((word) => ({ ...word, top: word.top + speed }))
+            fallingInterval = setInterval(() => {
+                setFallingWords(fallingWords =>
+                    fallingWords
+                        .map(fw => ({ ...fw, position: fw.position + fw.speed })) // 단어 위치 업데이트
+                        .filter(fw => fw.position <= window.innerHeight - 100) // 화면 바깥으로 나간 단어 제거
                 );
-            }, 100);
-
-            return () => clearInterval(moveWords);
+            }, 50);
         }
-    }, [speed, isGameStarted]);
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-        const matchedWordIndex = fallingWords.findIndex((word) => word.text === e.target.value);
-        if (matchedWordIndex !== -1) {
-            setScore(score + 1);
-            setFallingWords(fallingWords.filter((_, index) => index !== matchedWordIndex));
-            setInput('');
+        return () => {
+            clearInterval(wordGenerationInterval);
+            clearInterval(fallingInterval);
+        };
+    }, [isGameStarted, words]);
+
+    const handleChange = (e) => {
+        setTypedWord(e.target.value);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === " ") {
+            const trimmedTypedWord = typedWord.trim();
+            const matchedWordIndex = fallingWords.findIndex(fw => fw.word === trimmedTypedWord);
+            if (matchedWordIndex !== -1) {
+                setScore(score + 1);
+                setMessage("성공! 🎉😊");
+                setFallingWords(fallingWords.filter((_, index) => index !== matchedWordIndex));
+                setTypedWord("");
+                setTimeout(() => setMessage(""), 1000);
+            } else if (trimmedTypedWord.length > 0) {
+                setMessage("실패! 😢");
+                setTypedWord("");
+                setTimeout(() => setMessage(""), 1000);
+            }
         }
     };
 
-    const startGame = () => {
-        setIsGameStarted(true);
-        setTimeLeft(60);
-        setSpeed(0.5);
-        setScore(0);
-        setFallingWords([]);
-        const initialWord = words[Math.floor(Math.random() * words.length)];
-        const initialLeft = Math.random() * 80; // 랜덤으로 위치 설정
-        setFallingWords([{ text: initialWord, top: 0, left: initialLeft }]);
-    };
+    useEffect(() => {
+        document.body.classList.add('game-page');
+        return () => {
+            document.body.classList.remove('game-page');
+        };
+    }, []);
 
     return (
-
-        <div className="game-container" ref={gameContainerRef}>
-            <Navbar />
-            <div className="game-content">
-                <div className="score-timer-container">
-                    <div className="score">Score: {score}</div>
-                    <div className="timer">Time Left: {timeLeft}s</div>
-                </div>
-                <div className="game-area">
-                    {fallingWords.map((word, index) => (
+        <>
+            <Navbar />  {/* Navbar 추가 */}
+            <div className="mini-game">
+                <h1>미니 게임</h1>
+                <h2>Score: {score}</h2>
+                <h2>Time Left: {timeLeft}s</h2>
+                <div className="game-container">
+                    {fallingWords.map((fw, index) => (
                         <div
                             key={index}
-                            className="falling-word"
-                            style={{ top: `${word.top}px`, left: `${word.left}%` }}
+                            className="falling-word-container"
+                            style={{ top: fw.position + 'px', left: fw.left + '%' }}
                         >
-                            {word.text}
+                            <div className="falling-word">
+                                {fw.word}
+                            </div>
                         </div>
                     ))}
                 </div>
                 <input
                     type="text"
-                    value={input}
-                    onChange={handleInputChange}
-                    className="input-box"
-                    placeholder="Type the falling words..."
+                    value={typedWord}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="단어를 입력하세요"
                 />
-                {!isGameStarted && (
-                    <button className="start-button" onClick={startGame}>Start Game</button>
+                <p>{message}</p>
+                {!isGameStarted && !gameOver && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <button onClick={startGame}>Start Game</button>
+                        </div>
+                    </div>
+                )}
+                {gameOver && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <p>시간 초과! 점수: {score}</p>
+                            <button onClick={startGame}>Restart Game</button>
+                        </div>
+                    </div>
                 )}
             </div>
-        </div>
+        </>
     );
 };
 

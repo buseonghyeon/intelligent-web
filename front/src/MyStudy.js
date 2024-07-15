@@ -30,54 +30,26 @@ const MyStudy = () => {
             return;
         }
 
-        const fetchSearchLogs = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/search-log/${userId}/${format(date, 'yyyy-MM-dd')}`);
-                setSearchLogs(response.data);
+                const searchLogResponse = await axios.get(`http://localhost:5000/search-log/${userId}/${format(date, 'yyyy-MM-dd')}`);
+                setSearchLogs(searchLogResponse.data);
+
+                const categoryStatsResponse = await axios.get(`http://localhost:5000/category-stats/${userId}`);
+                setCategoryStats(categoryStatsResponse.data);
+
+                const dailyStatsResponse = await axios.get(`http://localhost:5000/daily-stats/${userId}`);
+                setDailyStats(dailyStatsResponse.data);
+                console.log('Daily Stats:', dailyStatsResponse.data); // 데이터 확인
+
                 setError(null);
             } catch (err) {
-                setError('Error fetching search logs');
+                setError('Error fetching data');
                 console.error(err);
             }
         };
 
-        const fetchCategoryStats = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/category-stats/${userId}`);
-                setCategoryStats(response.data);
-                setError(null);
-            } catch (err) {
-                setError('Error fetching category stats');
-                console.error(err);
-            }
-        };
-
-        const fetchMonthlyStats = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/monthly-stats/${userId}`);
-                setMonthlyStats(response.data);
-                setError(null);
-            } catch (err) {
-                setError('Error fetching monthly stats');
-                console.error(err);
-            }
-        };
-
-        const fetchDailyStats = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/daily-stats/${userId}`);
-                setDailyStats(response.data);
-                setError(null);
-            } catch (err) {
-                setError('Error fetching daily stats');
-                console.error(err);
-            }
-        };
-
-        fetchSearchLogs();
-        fetchCategoryStats();
-        fetchMonthlyStats();
-        fetchDailyStats();
+        fetchData();
     }, [date, userId]);
 
     const categoryData = {
@@ -91,29 +63,17 @@ const MyStudy = () => {
         ],
     };
 
-    const monthlyData = {
-        labels: monthlyStats.map(stat => format(new Date(stat.month), 'MMMM', { locale: ko })),
-        datasets: [
-            {
-                label: 'Words Learned',
-                data: monthlyStats.map(stat => stat.count),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            },
-        ],
-    };
-
     const dailyData = {
-        labels: Array.from({ length: 31 }, (_, i) => `${i + 1}`),
+        labels: Array.from({ length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() }, (_, i) => `${i + 1}`),
         datasets: [
             {
                 label: 'Words Learned',
-                data: Array.from({ length: 31 }, (_, i) => {
+                data: Array.from({ length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() }, (_, i) => {
                     const day = i + 1;
                     const stat = dailyStats.find(d => {
-                        const date = new Date(d.date);
-                        return date.getDate() === day && date.getMonth() === 6; // 6은 7월을 의미
+                        const searchDate = new Date(d.date);
+                        return searchDate.getDate() === day && searchDate.getMonth() === date.getMonth() && searchDate.getFullYear() === date.getFullYear();
                     });
-                    console.log(`Day ${day}: ${stat ? stat.count : 0}`); // 데이터 확인용 로그
                     return stat ? stat.count : 0;
                 }),
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
@@ -125,7 +85,7 @@ const MyStudy = () => {
         scales: {
             y: {
                 beginAtZero: true,
-                max: 50, // y축 최대 값 설정
+                max: 30, // y축 최대 값 설정
             },
             x: {
                 ticks: {
@@ -136,12 +96,10 @@ const MyStudy = () => {
         maintainAspectRatio: false,
     };
 
-    // 페이지 변경 핸들러
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
-    // 현재 페이지의 항목들
     const currentItems = searchLogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(searchLogs.length / itemsPerPage);
 

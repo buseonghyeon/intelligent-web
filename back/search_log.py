@@ -25,6 +25,18 @@ def monthly_stats(user_id):
     result = [{'month': stat.month, 'count': stat.count} for stat in stats]
     return jsonify(result)
 
+# 일별 통계
+@app.route('/daily-stats/<user_id>', methods=['GET'])
+def daily_stats(user_id):
+    stats = db.session.query(
+        Category.date,
+        func.count(Category.id).label('count')
+    ).filter_by(user_id=user_id).group_by(Category.date).all()
+
+    result = [{'date': stat.date.strftime('%Y-%m-%d'), 'count': stat.count} for stat in stats]
+    return jsonify(result)
+
+
 # 특정 날짜의 검색 로그
 @app.route('/search-log/<user_id>/<date>', methods=['GET'])
 def search_log(user_id, date):
@@ -109,6 +121,9 @@ def get_high_data(day):
     except Exception as e:
         print(f"Error: {e}")  # 오류 메시지 출력
         return jsonify({"error": str(e)}), 500
+
+
+
 
 # 모든 학력의 단어 가져오기
 @app.route('/words', methods=['GET'])

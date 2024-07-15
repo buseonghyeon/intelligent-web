@@ -1,4 +1,3 @@
-수정전Home.css
 @font-face {
     font-family: 'Ownglyph_UNZ-Rg';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2') format('woff2');
@@ -39,6 +38,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 20px;
     transition: border-color 0.3s;
+    margin-top: 18px;
 }
 
 .search-container-home input:focus {

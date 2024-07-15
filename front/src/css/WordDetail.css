@@ -1,4 +1,3 @@
-WordDetail.css
 @font-face {
     font-family: 'Ownglyph_UNZ-Rg';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2') format('woff2');
@@ -28,6 +27,7 @@ body {
     border-radius: 4px;
     width: 300px;
     margin-right: 10px;
+    margin-top: 18px;
 }
 .search-button {
     padding: 15px;
@@ -39,12 +39,20 @@ body {
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
+.search-button:hover {
+    background-color: #e0e6f8; /* 연한 색상 */
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
 .favorite-button {
     font-size: 2rem;
     background: none;
     cursor: pointer;
     transition: color 0.3s;
     border: none;
+}
+.favorite-button:hover {
+    background: none;
 }
 .word-content {
     display: flex;

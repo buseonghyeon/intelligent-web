@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1353cd1-c941-4e59-bc87-32c20747517b" name="Changes" comment="" />
+    <list default="true" id="f1353cd1-c941-4e59-bc87-32c20747517b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back/speech-to-text.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/Chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/Chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/Database_Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/Database_Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/search_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/search_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/service-account.json" beforeDir="false" afterPath="$PROJECT_DIR$/back/service-account.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/translate.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/translate.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

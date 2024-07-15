@@ -2,6 +2,7 @@ from flask import request, jsonify
 import openai
 from Database_Server import app, db, Category
 import re
+from datetime import datetime
 
 # OpenAI API Key 설정
 openai.api_key = ""
@@ -143,49 +144,8 @@ Translation in Korean: [Korean translation of example sentence]
                 raise IndexError("Not all parts were found in the response content.")
 
             # Fetch definitions for the translation and synonym
-            definition_response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": """
-Role: You are a dictionary that provides definitions for words.
-
-Task: Provide a brief definition for the given word only korean.
-
-Output Format:
-Definition: [Definition of the word]
-                        """
-                    },
-                    {
-                        "role": "user",
-                        "content": parts["Translation"],
-                    },
-                ],
-            )
-            translation_definition = definition_response.choices[0].message['content'].strip()
-
-            synonym_definition_response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": """
-Role: You are a dictionary that provides definitions for words.
-
-Task: Provide a brief definition for the given word only korean.
-
-Output Format:
-Definition: [Definition of the word]
-                        """
-                    },
-                    {
-                        "role": "user",
-                        "content": parts["Synonyms"],
-                    },
-                ],
-            )
-            synonym_definition = synonym_definition_response.choices[0].message['content'].strip()
+            translation_definition = get_definition(parts["Translation"])
+            synonym_definition = get_definition(parts["Synonyms"])
 
             output_json = {
                 "Translation": parts["Translation"],
@@ -202,32 +162,19 @@ Definition: [Definition of the word]
             output_json["image_url"] = image_url
 
             # Save to database
-            if is_english(user_text):
-                new_category = Category(
-                    user_id=user_id,
-                    category=parts["Category"],
-                    korean=parts["Translation"],
-                    english=user_text,
-                    image=image_url,
-                    synonym=parts["Synonyms"],
-                    example_sentence=parts["Example Sentence"],
-                    translation_in_korean=parts["Translation in Korean"],
-                    definition=translation_definition,
-                    synonym_definition=synonym_definition,
-                )
-            else:
-                new_category = Category(
-                    user_id=user_id,
-                    category=parts["Category"],
-                    korean=user_text,
-                    english=parts["Translation"],
-                    image=image_url,
-                    synonym=parts["Synonyms"],
-                    example_sentence=parts["Example Sentence"],
-                    translation_in_korean=parts["Translation in Korean"],
-                    definition=translation_definition,
-                    synonym_definition=synonym_definition,
-                )
+            new_category = Category(
+                user_id=user_id,
+                category=parts["Category"],
+                korean=user_text if not is_english(user_text) else parts["Translation"],
+                english=user_text if is_english(user_text) else parts["Translation"],
+                image=image_url,
+                synonym=parts["Synonyms"],
+                example_sentence=parts["Example Sentence"],
+                translation_in_korean=parts["Translation in Korean"],
+                definition=translation_definition,
+                synonym_definition=synonym_definition,
+                date=datetime.now().date()
+            )
 
             db.session.add(new_category)
             db.session.commit()
@@ -241,3 +188,30 @@ Definition: [Definition of the word]
     except Exception as e:
         print(f"Error generating response: {e}")
         return jsonify({"error": "Failed to generate response"}), 500
+
+def get_definition(word):
+    try:
+        definition_response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
+Role: You are a dictionary that provides definitions for words.
+
+Task: Provide a brief definition for the given word only in Korean.
+
+Output Format:
+Definition: [Definition of the word]
+                        """
+                },
+                {
+                    "role": "user",
+                    "content": word,
+                },
+            ],
+        )
+        return definition_response.choices[0].message['content'].strip()
+    except Exception as e:
+        print(f"Error fetching definition: {e}")
+        return None

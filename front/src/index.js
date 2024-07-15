@@ -9,7 +9,7 @@ import Game from "./Game";
 import MyStudy from "./MyStudy";
 import Chat from "./Chat";
 import reportWebVitals from './reportWebVitals';
-import { DarkModeProvider } from './components/DarkModeContext'; // Import DarkModeProvider
+import { DarkModeProvider } from './components/DarkModeContext'; // Ensure correct relative path
 
 const App = () => (
     <DarkModeProvider>

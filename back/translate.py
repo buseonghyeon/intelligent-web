@@ -4,7 +4,7 @@ from Database_Server import app, db, Category
 import re
 
 # OpenAI API Key 설정
-openai.api_key = ""
+openai.api_key = "API"
 
 def is_english(text):
     """입력된 텍스트가 영어인지 확인"""

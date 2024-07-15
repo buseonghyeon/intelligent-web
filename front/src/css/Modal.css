@@ -18,6 +18,7 @@
     width: 100%;
     max-height: 80%;
     overflow-y: auto;
+    font-size: 1.1em; /* Increase the base font size */
 }
 
 .modal-scroll {
@@ -27,6 +28,7 @@
 
 ol {
     padding-left: 20px;
+    font-size: 1em; /* Adjust font size for ordered list */
 }
 
 li {
@@ -47,10 +49,38 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1em; /* Adjust font size for buttons */
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+.speaker-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em; /* Increase the size to match the parent <p> */
+    margin-left: 5px;
+    vertical-align: baseline;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 1em;
+}
+
+.speaker-button:hover {
+    color: #555; /* Optional: Change color on hover */
+}
+
+.line {
+    margin: 0;
+    padding: 5px 0; /* Adjust padding for consistency */
+    line-height: 1.5; /* Adjust line height for consistency */
+    text-align: left;
+    height: 50px;
+    font-size: 20px; /* Adjust font size for lines */
 }
 
 .score {
@@ -70,5 +100,5 @@ button:hover {
 }
 
 .incorrect-bar {
-    background-color:lightgray;
+    background-color: lightgray;
 }

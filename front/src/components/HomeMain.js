@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
 import QuizModal from './QuizModal';
+import QuestionModal from './QuestionModal';
 import axios from 'axios';
 import '../css/HomeMain.css';
 
@@ -10,10 +11,12 @@ const HomeMain = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
+    const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
     const [dayData, setDayData] = useState([]);
     const [quizData, setQuizData] = useState([]);
     const [answers, setAnswers] = useState({});
     const [score, setScore] = useState({});
+    const [isCustomLearning, setIsCustomLearning] = useState(false);
     const itemsPerPage = 5;
 
     const userId = localStorage.getItem('userId');
@@ -23,6 +26,9 @@ const HomeMain = () => {
         if (savedScore && savedScore[userId]) {
             setScore(savedScore[userId]);
         }
+
+        const customLearningState = JSON.parse(localStorage.getItem('customLearningState')) || {};
+        setIsCustomLearning(customLearningState[userId] || false);
     }, [userId]);
 
     const handleCategoryClick = (category) => {
@@ -36,7 +42,9 @@ const HomeMain = () => {
     const handleDayClick = async (day) => {
         setSelectedDay(day);
         try {
-            const response = await axios.get(`http://localhost:5000/${selectedCategory}/${day}`);
+            const response = await axios.get(`http://localhost:5000/${selectedCategory}/${day}`, {
+                params: { userId }
+            });
             setDayData(response.data);
             setIsModalOpen(true);
         } catch (error) {
@@ -47,7 +55,9 @@ const HomeMain = () => {
     const handleQuizClick = async (day) => {
         setSelectedDay(day);
         try {
-            const response = await axios.get(`http://localhost:5000/${selectedCategory}/${day}`);
+            const response = await axios.get(`http://localhost:5000/${selectedCategory}/${day}`, {
+                params: { userId }
+            });
             setQuizData(response.data);
             setIsQuizModalOpen(true);
         } catch (error) {
@@ -111,6 +121,29 @@ const HomeMain = () => {
         alert(`맞은 개수: ${correct}\n틀린 개수: ${incorrect}`);
     };
 
+    const handleCustomLearningClick = () => {
+        setIsQuestionModalOpen(true); // 설문조사 모달 열기
+    };
+
+    const handleQuestionSubmit = async (answers) => {
+        setIsQuestionModalOpen(false);
+        try {
+            const response = await axios.post('http://localhost:5000/create-word', { userId, answers });
+            if (response.data.message === "Words created successfully!") {
+                setIsCustomLearning(true); // 학습 버튼으로 전환
+                const customLearningState = JSON.parse(localStorage.getItem('customLearningState')) || {};
+                customLearningState[userId] = true;
+                localStorage.setItem('customLearningState', JSON.stringify(customLearningState)); // 학습 상태 저장
+            }
+        } catch (error) {
+            console.error("Error submitting questions:", error);
+        }
+    };
+
+    const handleCloseQuestionModal = () => {
+        setIsQuestionModalOpen(false);
+    };
+
     const days = Array.from({ length: 10 }, (_, i) => i + 1);
 
     return (
@@ -119,6 +152,12 @@ const HomeMain = () => {
                 <div className={`menu-item ${selectedCategory === 'elementary' ? 'active' : ''}`} onClick={() => handleCategoryClick('elementary')}>초등학교</div>
                 <div className={`menu-item ${selectedCategory === 'middle' ? 'active' : ''}`} onClick={() => handleCategoryClick('middle')}>중학교</div>
                 <div className={`menu-item ${selectedCategory === 'high' ? 'active' : ''}`} onClick={() => handleCategoryClick('high')}>고등학교</div>
+                {!isCustomLearning && (
+                    <div className="menu-item" onClick={handleCustomLearningClick}>맞춤형</div>
+                )}
+                {isCustomLearning && (
+                    <div className="menu-item" onClick={() => handleCategoryClick('custom')}>학습</div>
+                )}
             </div>
             {selectedCategory ? (
                 <div className="content">
@@ -161,6 +200,11 @@ const HomeMain = () => {
                 onAnswerChange={handleAnswerChange}
                 onSubmit={handleQuizSubmit}
                 score={score}
+            />
+            <QuestionModal
+                isOpen={isQuestionModalOpen}
+                onClose={handleCloseQuestionModal}
+                onSubmit={handleQuestionSubmit}
             />
         </div>
     );

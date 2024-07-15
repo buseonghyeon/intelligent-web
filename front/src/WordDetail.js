@@ -25,8 +25,10 @@ function WordDetail() {
     };
 
     const handleNewSearch = async () => {
+        const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID 가져오기
         try {
             const res = await axios.post("http://localhost:5000/translate", {
+                userId, // 사용자 ID 포함
                 text: newSearchTerm,
             });
             navigate(`/word?term=${encodeURIComponent(newSearchTerm)}`, { state: { ...res.data, searchTerm: newSearchTerm } });

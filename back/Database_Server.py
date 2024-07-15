@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -61,6 +61,15 @@ class Hs(db.Model):
     meaning = db.Column(db.String(256), nullable=False)
     example = db.Column(db.String(256), nullable=True)
     example_meaning = db.Column(db.String(256), nullable=True)
+
+class UserWords(db.Model):
+    __tablename__ = 'user_words'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(255), db.ForeignKey('user.id'), nullable=False)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(512), nullable=True)
+    example_meaning = db.Column(db.String(512), nullable=True)
 
 if __name__ == '__main__':
     app.run(debug=True)

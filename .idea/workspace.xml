@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
         <option value="CSS File" />
       </list>
     </option>
@@ -101,7 +101,7 @@
       <workItem from="1720157075589" duration="18487000" />
       <workItem from="1720571736327" duration="14854000" />
       <workItem from="1720592898590" duration="1056000" />
-      <workItem from="1720659993992" duration="57928000" />
+      <workItem from="1720659993992" duration="77989000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />
@@ -139,6 +139,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="all" />
     <option name="LAST_COMMIT_MESSAGE" value="all" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/front/src/components/QuestionModal.js</url>
+          <line>109</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/intelligent_web$app.coverage" NAME="app Coverage Results" MODIFIED="1720572804567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/back" />

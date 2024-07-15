@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import './Chat.css';
-import { DarkModeContext } from 'DarkModeContext';
+import { DarkModeContext } from './components/DarkModeContext'; // Ensure correct relative path
 
 const Chat = () => {
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);

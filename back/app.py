@@ -13,6 +13,7 @@ import register
 import generate_image
 import translate
 import search_log
+import game
 
 @app.route('/categories', methods=['GET'])
 def get_categories():

@@ -20,8 +20,21 @@ function WordDetail() {
         }
     }, [location.state]);
 
-    const toggleFavorite = () => {
+    const toggleFavorite = async () => {
         setFavorite(!favorite);
+        if (!favorite) {
+            const userId = localStorage.getItem('userId');
+            try {
+                await axios.post("http://localhost:5000/add-favorite", {
+                    userId,
+                    word: data.Translation,
+                    translation: data['Translation in Korean']
+                });
+            } catch (error) {
+                console.error("Error adding favorite:", error);
+                setError('Error adding favorite');
+            }
+        }
     };
 
     const handleNewSearch = async () => {
@@ -45,7 +58,7 @@ function WordDetail() {
                     <button
                         className="favorite-button"
                         onClick={toggleFavorite}
-                        style={{ color: favorite ? 'yellow' : 'white' }}>
+                        style={{ color: favorite ? 'red' : 'white' }}>
                         ★
                     </button> &nbsp;&nbsp;
                     <input

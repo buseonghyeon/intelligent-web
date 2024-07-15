@@ -1,20 +1,18 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from Database_Server import app, Category
-from google.cloud import texttospeech, speech_v1p1beta1 as speech
-import os
-
-app = Flask(__name__)
-
+from flask_migrate import Migrate
+from Database_Server import app, db, User, Category, Favorite
 # CORS 설정
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
-# 데이터베이스 설정
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///intelligent-web-db.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+migrate = Migrate(app, db)
 
-db = SQLAlchemy(app)
+# 엔드포인트 파일 임포트
+import login
+import register
+import generate_image
+import translate
+import search_log
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
@@ -23,38 +21,70 @@ def get_categories():
     categories_list = [{"english": c.english, "korean": c.korean, "image": c.image} for c in categories]
     return jsonify(categories_list)
 
-@app.route('/speak', methods=['POST'])
-def speak():
+@app.route('/user-info/<user_id>', methods=['GET'])
+def get_user_info(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if user:
+        user_info = {
+            'name': user.name,
+            'email': user.email
+        }
+        return jsonify(user_info)
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
+
+@app.route('/add-favorite', methods=['POST'])
+def add_favorite():
     data = request.get_json()
-    text = data.get('text', '')
+    user_id = data.get('userId')
+    word = data.get('word')
 
-    if not text:
-        return jsonify({'error': 'Text is required'}), 400
+    # Category 테이블에서 영어 또는 한국어가 일치하는 항목을 찾음
+    category_entry = Category.query.filter(
+        (Category.english == word) | (Category.korean == word),
+        Category.user_id == user_id
+    ).first()
 
-    # JSON 키 파일의 절대 경로를 가져옴
-    key_path = os.path.join(os.path.dirname(__file__), 'service-account.json')
-    client = texttospeech.TextToSpeechClient.from_service_account_json(key_path)
+    if not category_entry:
+        return jsonify({"error": "Word not found in category"}), 404
 
-    synthesis_input = texttospeech.SynthesisInput(text=text)
-    voice = texttospeech.VoiceSelectionParams(language_code='en-US', ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL)
-    audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
+    favorite = Favorite(user_id=user_id, word=category_entry.english, korean=category_entry.korean)
+    db.session.add(favorite)
+    db.session.commit()
 
-    response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
+    return jsonify({"message": "Favorite added successfully!"})
 
-    audio_content = response.audio_content
-    # MP3 파일을 저장할 경로 설정
-    mp3_dir = os.path.join(os.path.dirname(__file__), 'mp3')
-    if not os.path.exists(mp3_dir):
-        os.makedirs(mp3_dir)
 
-    file_name = os.path.join(mp3_dir, f"output-{text[:10]}.mp3")
+@app.route('/quiz-words/<user_id>', methods=['GET'])
+def get_quiz_words(user_id):
+    quiz_words = Category.query.filter_by(user_id=user_id, source='quiz').all()
+    words = [{'english': q.english, 'korean': q.korean} for q in quiz_words]
+    return jsonify(words)
 
-    with open(file_name, 'wb') as out:
-        out.write(audio_content)
+@app.route('/wrong-words/<user_id>', methods=['GET'])
+def get_wrong_words(user_id):
+    wrong_words = Category.query.filter_by(user_id=user_id, source='wrong').all()
+    words = [{'english': w.english, 'korean': w.korean} for w in wrong_words]
+    return jsonify(words)
 
-    return send_file(file_name, as_attachment=True, mimetype='audio/mp3', download_name='output.mp3')
+@app.route('/favorites/<user_id>', methods=['GET'])
+def get_favorites(user_id):
+    favorites = Favorite.query.filter_by(user_id=user_id).all()
+    favorites_list = [{"id": f.id, "word": f.word, "korean": f.korean} for f in favorites]
+    return jsonify(favorites_list)
+
+@app.route('/favorites/<int:favorite_id>', methods=['DELETE'])
+def delete_favorite(favorite_id):
+    favorite = Favorite.query.get(favorite_id)
+    if favorite:
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({"message": "Favorite deleted successfully!"})
+    return jsonify({"error": "Favorite not found"}), 404
+
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # 데이터베이스 테이블 생성
-    app.run(debug=True, port=5000)
+    app.run(debug=True)

@@ -70,7 +70,7 @@ function WordDetail() {
                             <div className="book-page right-page">
                                 <div className="word-content">
                                     <h2>[정의]</h2>
-                                    <p>{data.Translation}</p>
+                                    <p>{data.Definition}</p>
                                     <h2>[관련단어]</h2>
                                     <p>{data.Synonyms}</p>
                                     <h2>[예문]</h2>

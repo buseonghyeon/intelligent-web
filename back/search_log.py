@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from datetime import datetime
 from sqlalchemy import func,text
-from Database_Server import app, db, Category
+from Database_Server import app, db, Category, Es, Ms, Hs
 
 # 카테고리별 통계
 @app.route('/category-stats/<user_id>', methods=['GET'])
@@ -109,6 +109,16 @@ def get_high_data(day):
     except Exception as e:
         print(f"Error: {e}")  # 오류 메시지 출력
         return jsonify({"error": str(e)}), 500
+
+# 모든 학력의 단어 가져오기
+@app.route('/words', methods=['GET'])
+def get_words():
+    es_words = Es.query.all()
+    ms_words = Ms.query.all()
+    hs_words = Hs.query.all()
+
+    words = [word.word for word in es_words] + [word.word for word in ms_words] + [word.word for word in hs_words]
+    return jsonify(words)
 
 if __name__ == '__main__':
     app.run(debug=True)

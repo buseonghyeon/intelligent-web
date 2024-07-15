@@ -16,12 +16,14 @@ const HomeMain = () => {
     const [score, setScore] = useState({});
     const itemsPerPage = 5;
 
+    const userId = localStorage.getItem('userId');
+
     useEffect(() => {
         const savedScore = JSON.parse(localStorage.getItem('score'));
-        if (savedScore) {
-            setScore(savedScore);
+        if (savedScore && savedScore[userId]) {
+            setScore(savedScore[userId]);
         }
-    }, []);
+    }, [userId]);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -97,8 +99,12 @@ const HomeMain = () => {
                 [selectedDay]: { correct, incorrect, total: quizData.length }
             }
         };
+
+        const updatedScores = JSON.parse(localStorage.getItem('score')) || {};
+        updatedScores[userId] = newScore;
+        localStorage.setItem('score', JSON.stringify(updatedScores));
+
         setScore(newScore);
-        localStorage.setItem('score', JSON.stringify(newScore));
         setIsQuizModalOpen(false);
         setAnswers({});
 

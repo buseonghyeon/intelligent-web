@@ -38,5 +38,29 @@ class Category(db.Model):
     synonym_definition = db.Column(db.String(1024), nullable=True)
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)  # Add the date column
 
+class Es(db.Model):
+    __tablename__ = 'es'
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(256), nullable=True)
+    example_meaning = db.Column(db.String(256), nullable=True)
+
+class Ms(db.Model):
+    __tablename__ = 'ms'
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(256), nullable=True)
+    example_meaning = db.Column(db.String(256), nullable=True)
+
+class Hs(db.Model):
+    __tablename__ = 'hs'
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(256), nullable=True)
+    example_meaning = db.Column(db.String(256), nullable=True)
+
 if __name__ == '__main__':
     app.run(debug=True)

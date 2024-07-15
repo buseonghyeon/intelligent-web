@@ -4,7 +4,7 @@ from Database_Server import app, db, UserWords
 import logging
 
 # OpenAI API 키 설정
-openai.api_key = "API"
+openai.api_key = ""
 # 로깅 설정
 logging.basicConfig(level=logging.DEBUG)
 

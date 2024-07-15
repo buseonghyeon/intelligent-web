@@ -1,59 +1,60 @@
-from flask import Blueprint, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-import openai
+from flask_sqlalchemy import SQLAlchemy
+from Database_Server import app, Category
+from google.cloud import texttospeech, speech_v1p1beta1 as speech
 import os
-from google.cloud import speech
-import logging
 
-chat_bp = Blueprint('chat_bp', __name__)
-CORS(chat_bp, resources={r"/*": {"origins": "*"}})
+app = Flask(__name__)
 
-# Google Cloud Speech-to-Text 및 OpenAI API 키 설정
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\LAPTOP\PycharmProjects\intelligent-web\back\speech-to-text.json"
-openai.api_key = "API Key"
+# CORS 설정
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-# 로깅 설정
-logging.basicConfig(level=logging.DEBUG)
+# 데이터베이스 설정
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///intelligent-web-db.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@chat_bp.route('/chat', methods=['POST'])
-def chat():
-    try:
-        audio_file = request.files['file']
-        audio_content = audio_file.read()
+db = SQLAlchemy(app)
 
-        # Google Speech-to-Text
-        client = speech.SpeechClient()
-        audio = speech.RecognitionAudio(content=audio_content)
-        config = speech.RecognitionConfig(
-            encoding=speech.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,  # Auto-detect encoding
-            sample_rate_hertz=48000,  # Set sample rate to 48000 Hz
-            language_code="en-US",
-        )
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    user_id = request.args.get('userId')
+    categories = Category.query.filter_by(user_id=user_id).all()
+    categories_list = [{"english": c.english, "korean": c.korean, "image": c.image} for c in categories]
+    return jsonify(categories_list)
 
-        response = client.recognize(config=config, audio=audio)
+@app.route('/speak', methods=['POST'])
+def speak():
+    data = request.get_json()
+    text = data.get('text', '')
 
-        if not response.results:
-            return jsonify({'error': 'No speech recognized'}), 400
+    if not text:
+        return jsonify({'error': 'Text is required'}), 400
 
-        text = response.results[0].alternatives[0].transcript
+    # JSON 키 파일의 절대 경로를 가져옴
+    key_path = os.path.join(os.path.dirname(__file__), 'service-account.json')
+    client = texttospeech.TextToSpeechClient.from_service_account_json(key_path)
 
-        # OpenAI GPT-3.5
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": text}
-                ],
-                max_tokens=150
-            )
-            answer = response.choices[0].message['content'].strip()
-        except Exception as e:
-            logging.error(f"OpenAI API error: {str(e)}")
-            return jsonify({'error': str(e)}), 500
+    synthesis_input = texttospeech.SynthesisInput(text=text)
+    voice = texttospeech.VoiceSelectionParams(language_code='en-US', ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL)
+    audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
 
-        return jsonify({'text': text, 'response': answer})
+    response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
 
-    except Exception as e:
-        logging.error(f"Error processing request: {str(e)}")
-        return jsonify({'error': 'Internal server error', 'details': str(e)}), 500
+    audio_content = response.audio_content
+    # MP3 파일을 저장할 경로 설정
+    mp3_dir = os.path.join(os.path.dirname(__file__), 'mp3')
+    if not os.path.exists(mp3_dir):
+        os.makedirs(mp3_dir)
+
+    file_name = os.path.join(mp3_dir, f"output-{text[:10]}.mp3")
+
+    with open(file_name, 'wb') as out:
+        out.write(audio_content)
+
+    return send_file(file_name, as_attachment=True, mimetype='audio/mp3', download_name='output.mp3')
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # 데이터베이스 테이블 생성
+    app.run(debug=True, port=5000)

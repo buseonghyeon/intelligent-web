@@ -101,7 +101,7 @@
       <workItem from="1720157075589" duration="18487000" />
       <workItem from="1720571736327" duration="14854000" />
       <workItem from="1720592898590" duration="1056000" />
-      <workItem from="1720659993992" duration="77989000" />
+      <workItem from="1720659993992" duration="80464000" />
     </task>
     <task id="LOCAL-00001" summary="all">
       <option name="closed" value="true" />
@@ -148,6 +148,10 @@
           <line>109</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/back/app.py</url>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

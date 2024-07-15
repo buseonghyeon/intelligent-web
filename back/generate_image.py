@@ -3,7 +3,7 @@ import openai
 from Database_Server import app
 
 # Initialize the OpenAI client
-openai.api_key = "API"
+openai.api_key = ""
 
 @app.route('/generate-image', methods=['POST'])
 def Generate_image():

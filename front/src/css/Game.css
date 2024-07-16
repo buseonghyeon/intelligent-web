@@ -5,7 +5,7 @@
   max-width: 1300px;
   max-height: 100vh; /* 세로 크기 제한 추가 */
   border: 2px solid #CED8F6;
-  margin-left: 70px;
+  margin-left: 40px;
   overflow: hidden;
   position: relative;
 }

@@ -59,7 +59,7 @@ const MyStudy = () => {
             {
                 label: 'Search Count',
                 data: categoryStats.map(stat => stat.count),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#E57373', '#BA68C8', '#FFD54F', '#4DD0E1', '#81C784', '#9575CD', '#FF8A65', '#4DB6AC', '#7986CB', '#F06292', '#64B5F6', '#DCE775', '#FFB74D', '#AED581']
             },
         ],
     };

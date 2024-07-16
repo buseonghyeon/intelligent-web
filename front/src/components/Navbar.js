@@ -7,17 +7,17 @@ const Navbar = () => {
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
 
     return (
-        <nav className="navbar">
-            <div><img className="logo" src={"/images/logo.png"} alt="Logo" /></div>
+        <nav className={`navbar ${darkMode ? 'dark' : ''}`}>
+            <div><img className="logo" src={"/images/Logo.png"} alt="Logo" /></div>
             <div className="menu">
                 <Link to="/home">Home</Link>
                 <Link to="/mystudy">Study</Link>
                 <Link to="/mypage">Mypage</Link>
                 <Link to="/game">Game</Link>
                 <Link to="/Chat">Chat</Link>
-                <button className="dark-mode-button" onClick={toggleDarkMode}>
+                <span className="dark-mode-toggle" onClick={toggleDarkMode}>
                     {darkMode ? '🌞' : '🌜'}
-                </button>
+                </span>
             </div>
         </nav>
     );

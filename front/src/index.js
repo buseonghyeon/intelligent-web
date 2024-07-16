@@ -9,8 +9,9 @@ import Game from './Game';
 import MyStudy from './MyStudy';
 import MyPage from './MyPage';
 import Chat from './Chat';
-import { DarkModeProvider } from './DarkModeContext'; // DarkModeContext 임포트
+import { DarkModeProvider } from './DarkModeContext';
 import reportWebVitals from './reportWebVitals';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,6 +19,7 @@ root.render(
     <React.StrictMode>
         <DarkModeProvider>
             <Router>
+
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/home" element={<Home />} />

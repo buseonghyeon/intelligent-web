@@ -12,6 +12,12 @@
     padding: 10px 20px;
     background-color: #ced8f6;
     color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar.dark {
+    background-color: #333;
+    color: #fff;
 }
 
 .logo {
@@ -43,10 +49,45 @@
     transform: translateY(-2px); /* 살짝 위로 이동 */
 }
 
-.dark-mode-button {
-    margin-left: 20px; /* 버튼과 마지막 링크 사이의 간격을 조정하세요 */
-    background: none;
-    border: none;
-    cursor: pointer;
+.menu a.dark {
+    background-color: #555;
+    color: white;
+}
+
+.menu a.dark:hover {
+    background-color: #777; /* 연한 색상 */
+    color: white;
+}
+
+.dark-mode-toggle {
+    margin-left: 20px;
     font-size: 20px;
+    cursor: pointer;
+    user-select: none; /* 선택 방지 */
+    transition: transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.2); /* 호버 시 크기 확대 */
+}
+
+/* 다크 모드 스타일 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .navbar {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .menu a {
+    background-color: #555;
+    color: white;
+}
+
+body.dark-mode .menu a:hover {
+    background-color: #777;
+    color: white;
 }

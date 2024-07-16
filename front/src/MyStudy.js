@@ -33,7 +33,8 @@ const MyStudy = () => {
         const fetchData = async () => {
             try {
                 const searchLogResponse = await axios.get(`http://localhost:5000/search-log/${userId}/${format(date, 'yyyy-MM-dd')}`);
-                setSearchLogs(searchLogResponse.data);
+                const uniqueLogs = [...new Map(searchLogResponse.data.map(item => [item.english, item])).values()];
+                setSearchLogs(uniqueLogs);
 
                 const categoryStatsResponse = await axios.get(`http://localhost:5000/category-stats/${userId}`);
                 setCategoryStats(categoryStatsResponse.data);

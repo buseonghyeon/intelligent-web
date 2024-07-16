@@ -24,14 +24,20 @@ function WordDetail() {
         setFavorite(!favorite);
         if (!favorite) {
             const userId = localStorage.getItem('userId');
+            if (!userId) {
+                setError('User ID is missing. Please log in.');
+                return;
+            }
+
             try {
-                await axios.post("http://localhost:5000/add-favorite", {
+                const response = await axios.post("http://localhost:5000/add-favorite", {
                     userId,
                     word: data.Translation,
                     translation: data['Translation in Korean']
                 });
+                console.log("Favorite added successfully:", response.data);
             } catch (error) {
-                console.error("Error adding favorite:", error);
+                console.error("Error adding favorite:", error.response || error.message || error);
                 setError('Error adding favorite');
             }
         }
@@ -44,6 +50,7 @@ function WordDetail() {
                 userId, // 사용자 ID 포함
                 text: newSearchTerm,
             });
+            setFavorite(false); // 새로운 단어 검색 시 즐겨찾기 상태 초기화
             navigate(`/word?term=${encodeURIComponent(newSearchTerm)}`, { state: { ...res.data, searchTerm: newSearchTerm } });
         } catch (error) {
             setError('Error searching new term');

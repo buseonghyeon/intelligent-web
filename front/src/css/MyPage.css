@@ -1,5 +1,3 @@
-MyPage.css
-    /* MyPage.css */
 body {
     font-family: 'Arial', sans-serif;
 }
@@ -76,4 +74,29 @@ button.cancel {
 
 .study-button:hover {
     background-color: #45a049;
+}
+
+.pagination_mypage {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pm {  /* Pagenation_mypage */
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pm:hover {
+    background-color: #45a049;
+}
+
+.pm.active {
+    background-color: #45a049;
+    font-weight: bold;
 }

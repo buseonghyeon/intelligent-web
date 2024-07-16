@@ -1,15 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <div><img className="logo" src={"/images/logo.png"}></img></div>
+            <div><img className="logo" src={"/images/logo.png"} alt="Logo" /></div> {/* Self-closing tag */}
             <div className="menu">
-                <a href={"http://localhost:3000/home"}>Home</a>
-                <a href={"http://localhost:3000/mystudy"}>Study</a>
-                <a href={"/mypage"}>Mypage</a>
-                <a href={"http://localhost:3000/game"}>Game</a>
+                <Link to="/home">Home</Link>
+                <Link to="/mystudy">Study</Link>
+                <Link to="/mypage">Mypage</Link>
+                <Link to="/game">Game</Link>
+                <Link to="/Chat">Chat</Link> {/* Chat 링크 수정 */}
             </div>
         </nav>
     );

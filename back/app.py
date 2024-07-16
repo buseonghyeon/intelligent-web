@@ -25,7 +25,7 @@ migrate = Migrate(app, db)
 app.register_blueprint(chat_bp)
 
 # Google Cloud 인증 파일 경로 설정
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/LAPTOP/PycharmProjects/intelligent/back/service-account.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/82103/PycharmProjects/intelligent_web/back/service-account.json'
 
 @app.route('/speak', methods=['POST'])
 def speak():

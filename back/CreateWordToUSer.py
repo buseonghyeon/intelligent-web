@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, current_app
 import openai
-from Database_Server import app, db, UserWords
+from Database_Server import app, db, UserWords,Es,Ms,Hs
 import logging
 import json
 from sqlalchemy.exc import SQLAlchemyError
@@ -83,6 +83,29 @@ def get_custom_words():
         return jsonify({"message": "No words found"}), 404
 
     words_data = [{"word": word.word, "meaning": word.meaning, "example": word.example, "example_meaning": word.example_meaning} for word in custom_words]
+    return jsonify(words_data)
+
+@app.route('/words/<category>/<int:day>', methods=['GET'])
+def get_words(category, day):
+    user_id = request.args.get('userId')
+    per_page = 10
+    offset = (day - 1) * per_page
+
+    if category == 'elementary':
+        words = Es.query.offset(offset).limit(per_page).all()
+    elif category == 'middle':
+        words = Ms.query.offset(offset).limit(per_page).all()
+    elif category == 'high':
+        words = Hs.query.offset(offset).limit(per_page).all()
+    elif category == 'custom':
+        words = UserWords.query.filter_by(user_id=user_id).offset(offset).limit(per_page).all()
+    else:
+        return jsonify({"message": "Invalid category"}), 400
+
+    if not words:
+        return jsonify({"message": "No words found"}), 404
+
+    words_data = [{"word": word.word, "meaning": word.meaning, "example": word.example, "example_meaning": word.example_meaning} for word in words]
     return jsonify(words_data)
 
 if __name__ == '__main__':

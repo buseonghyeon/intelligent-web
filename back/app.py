@@ -5,6 +5,8 @@ from io import BytesIO
 import os
 from google.cloud import texttospeech
 from Database_Server import app, db, User, Category, Favorite
+
+
 import login
 import register
 import generate_image
@@ -12,7 +14,6 @@ import translate
 import search_log
 import game
 import CreateWordToUSer
-
 
 from Chat import chat_bp  # Chat 블루프린트 임포트
 
@@ -25,7 +26,7 @@ migrate = Migrate(app, db)
 app.register_blueprint(chat_bp)
 
 # Google Cloud 인증 파일 경로 설정
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/82103/PycharmProjects/intelligent_web/back/service-account.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/syung-hyun/intelligent-web/back/service-account.json'
 
 @app.route('/speak', methods=['POST'])
 def speak():

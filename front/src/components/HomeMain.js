@@ -128,8 +128,8 @@ const HomeMain = () => {
     const handleQuestionSubmit = async (answers) => {
         setIsQuestionModalOpen(false);
         try {
-            const response = await axios.post('http://localhost:5000/create-word', { userId, answers });
-            if (response.data.message === "Words created successfully!") {
+            const response = await axios.post('http://localhost:5000/generate_words', { user_id: userId, answers });
+            if (response.data.message === "Words generated and saved successfully!") {
                 setIsCustomLearning(true); // 학습 버튼으로 전환
                 const customLearningState = JSON.parse(localStorage.getItem('customLearningState')) || {};
                 customLearningState[userId] = true;

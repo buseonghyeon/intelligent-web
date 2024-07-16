@@ -13,7 +13,7 @@ chat_bp = Blueprint('chat', __name__)
 openai.api_key = ''
 
 # Google Cloud 인증 파일 경로 설정
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/82103/PycharmProjects/intelligent_web/back/speech-to-text.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/syung-hyun/intelligent-web/back/speech-to-text.jsonn'
 
 @chat_bp.route('/chat', methods=['POST'])
 def chat():

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import Navbar from './components/Navbar'; // Navbar 경로 수정
 import './Chat.css';
 import { DarkModeContext } from './DarkModeContext';
 
 const Chat = () => {
-    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+    const { darkMode } = useContext(DarkModeContext);
     const [messages, setMessages] = useState([]);
     const [isRecording, setIsRecording] = useState(false);
     const [recorder, setRecorder] = useState(null);
@@ -37,6 +38,7 @@ const Chat = () => {
                     });
                 } catch (error) {
                     console.error('Error:', error);
+                    setMessages((prevMessages) => [...prevMessages, { sender: 'error', text: 'Error processing your request' }]);
                 } finally {
                     setLoading(false);
                 }
@@ -57,11 +59,27 @@ const Chat = () => {
         }
     };
 
+    const speak = async (text) => {
+        try {
+            const response = await fetch('http://localhost:5000/speak', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text }),
+            });
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            audio.play();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div className="page-container">
-            <button className="dark-mode-button" onClick={toggleDarkMode}>
-                {darkMode ? '🌞' : '🌜'}
-            </button>
+            <Navbar /> {/* Navbar 추가 */}
             <div className={`chat-container ${darkMode ? 'dark' : ''}`}>
                 <div className="header">
                     <h2 className="chat-title">AI 영어 채팅 서비스</h2>
@@ -74,6 +92,9 @@ const Chat = () => {
                     {messages.map((message, index) => (
                         <div key={index} className={`message ${message.sender} ${darkMode ? 'dark' : ''}`}>
                             <p>{message.text}</p>
+                            {message.sender === 'gpt' && (
+                                <button className="speaker-button" onClick={() => speak(message.text)}>🔊</button>
+                            )}
                         </div>
                     ))}
                     {loading && (

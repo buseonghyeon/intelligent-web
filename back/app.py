@@ -1,6 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from flask_migrate import Migrate
+from io import BytesIO
+import os
+from google.cloud import texttospeech
 from Database_Server import app, db, User, Category, Favorite
 import login
 import register
@@ -11,12 +14,41 @@ import game
 from Chat import chat_bp  # Chat 블루프린트 임포트
 
 # CORS 설정
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 migrate = Migrate(app, db)
 
 # 블루프린트 등록
 app.register_blueprint(chat_bp)
+
+# Google Cloud 인증 파일 경로 설정
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/LAPTOP/PycharmProjects/intelligent/back/service-account.json'
+
+@app.route('/speak', methods=['POST'])
+def speak():
+    data = request.get_json()
+    text = data.get('text', '')
+
+    client = texttospeech.TextToSpeechClient()
+    synthesis_input = texttospeech.SynthesisInput(text=text)
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US",
+        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+
+    response = client.synthesize_speech(
+        input=synthesis_input,
+        voice=voice,
+        audio_config=audio_config
+    )
+
+    audio_content = response.audio_content
+    audio_stream = BytesIO(audio_content)
+
+    return send_file(audio_stream, mimetype='audio/mp3', as_attachment=True, download_name='output.mp3')
 
 @app.route('/categories', methods=['GET'])
 def get_categories():

@@ -1,9 +1,13 @@
 from flask import request, jsonify
 import openai
 from Database_Server import app
+import os
+from dotenv import load_dotenv
+# .env 파일 로드
+load_dotenv()
 
-# Initialize the OpenAI client
-openai.api_key = ""
+# OpenAI API Key 설정
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/generate-image', methods=['POST'])
 def Generate_image():

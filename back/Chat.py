@@ -3,14 +3,17 @@ from google.cloud import speech_v1p1beta1 as speech
 import openai
 import os
 import logging
+from dotenv import load_dotenv
+# .env 파일 로드
+load_dotenv()
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO)
 
 chat_bp = Blueprint('chat', __name__)
 
-# OpenAI API 키 설정
-openai.api_key = ''
+# OpenAI API Key 설정
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Google Cloud 인증 파일 경로 설정
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:/Users/LAPTOP/PycharmProjects/intelligent/back/speech-to-text.json'

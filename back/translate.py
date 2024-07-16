@@ -3,9 +3,13 @@ import openai
 from Database_Server import app, db, Category
 import re
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+# .env 파일 로드
+load_dotenv()
 
 # OpenAI API Key 설정
-openai.api_key = ""
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def is_english(text):
     """입력된 텍스트가 영어인지 확인"""

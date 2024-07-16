@@ -3,9 +3,13 @@ import openai
 from Database_Server import app, db, UserWords
 import logging
 import json
+import os
+from dotenv import load_dotenv
+# .env 파일 로드
+load_dotenv()
 
-# OpenAI API 키 설정
-openai.api_key = ""
+# OpenAI API Key 설정
+openai.api_key = os.getenv('OPENAI_API_KEY')
 # 로깅 설정
 logging.basicConfig(level=logging.DEBUG)
 

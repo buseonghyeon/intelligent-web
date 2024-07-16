@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import openai
 from Database_Server import app, db, UserWords
 import logging
+import json
 
 # OpenAI API 키 설정
 openai.api_key = ""
@@ -17,7 +18,13 @@ def create_word():
     age = answers['age']
     score = sum(1 for key, value in answers.items() if value in ('a', 'b', 'c', 'd'))
 
-    prompt = f"Create 10 English words per day for 10 days for a user who is {age} years old and scored {score} out of 10 in a basic English test. Provide the word, its meaning in Korean, an example sentence, and its meaning in Korean."
+    prompt = (f"Create 30 English words for a user who is {age} years old and scored {score} out of 10 in a basic English test. "
+              f"Provide each word with its meaning in Korean, an example sentence, and the meaning of the example sentence in Korean "
+              f"in the following format:\n"
+              f"1. Word: [English word]\n"
+              f"   Meaning: [Korean meaning]\n"
+              f"   Example sentence: [English example sentence]\n"
+              f"   Example sentence meaning: [Korean example sentence meaning]")
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -28,7 +35,9 @@ def create_word():
     )
 
     word_data = response.choices[0].message['content']
-    logging.debug("OpenAI response: %s", word_data)
+
+    # 원본 응답 데이터 로그 출력
+    logging.debug("OpenAI raw response: %s", word_data)
 
     parsed_words = []
 
@@ -43,8 +52,16 @@ def create_word():
         line = line.strip()
         if not line:
             continue
-        if line[0].isdigit() and '. ' in line:
-            if current_word:
+        if line.startswith('Word: '):
+            current_word = line.replace('Word: ', '').strip()
+        elif line.startswith('Meaning: '):
+            current_meaning = line.replace('Meaning: ', '').strip()
+        elif line.startswith('Example sentence: '):
+            current_example = line.replace('Example sentence: ', '').strip()
+        elif line.startswith('Example sentence meaning: '):
+            current_example_meaning = line.replace('Example sentence meaning: ', '').strip()
+
+            if current_word and current_meaning and current_example and current_example_meaning:
                 new_word = {
                     "word": current_word,
                     "meaning": current_meaning,
@@ -60,38 +77,23 @@ def create_word():
                     example=current_example,
                     example_meaning=current_example_meaning
                 )
+                logging.debug("Adding word to database: %s", new_word)
                 db.session.add(db_word)
 
-            parts = line.split('. ', 1)
-            word_and_meaning = parts[1].split(' (', 1)
-            current_word = word_and_meaning[0].strip()
-            current_meaning = word_and_meaning[1].rstrip(')').strip()
-            current_example = None
-            current_example_meaning = None
-        elif line.startswith('Example sentence: '):
-            current_example = line.replace('Example sentence: ', '').strip()
-        elif line.startswith('Meaning in Korean: '):
-            current_example_meaning = line.replace('Meaning in Korean: ', '').strip()
+                current_word = None
+                current_meaning = None
+                current_example = None
+                current_example_meaning = None
 
-    if current_word:
-        new_word = {
-            "word": current_word,
-            "meaning": current_meaning,
-            "example": current_example,
-            "example_meaning": current_example_meaning
-        }
-        parsed_words.append(new_word)
+    try:
+        db.session.commit()
+        logging.debug("Database commit successful")
+    except Exception as e:
+        logging.error("Database commit failed: %s", str(e))
+        db.session.rollback()
 
-        db_word = UserWords(
-            user_id=user_id,
-            word=current_word,
-            meaning=current_meaning,
-            example=current_example,
-            example_meaning=current_example_meaning
-        )
-        db.session.add(db_word)
-
-    db.session.commit()
+    # 응답 데이터를 JSON 형식으로 콘솔에 출력
+    logging.debug("OpenAI response JSON: %s", json.dumps(parsed_words, ensure_ascii=False, indent=4))
 
     return jsonify({"message": "Words created successfully!", "words": parsed_words})
 

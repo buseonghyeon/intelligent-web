@@ -11,6 +11,9 @@ import generate_image
 import translate
 import search_log
 import game
+import CreateWordToUSer
+
+
 from Chat import chat_bp  # Chat 블루프린트 임포트
 
 # CORS 설정

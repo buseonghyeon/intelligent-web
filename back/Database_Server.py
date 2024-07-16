@@ -69,6 +69,15 @@ class Hs(db.Model):
     example = db.Column(db.String(256), nullable=True)
     example_meaning = db.Column(db.String(256), nullable=True)
 
+class UserWords(db.Model):
+    __tablename__ = 'user_words'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(255), db.ForeignKey('user.id'), nullable=False)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(512), nullable=True)
+    example_meaning = db.Column(db.String(512), nullable=True)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

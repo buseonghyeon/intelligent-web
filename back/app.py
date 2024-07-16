@@ -2,18 +2,21 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from Database_Server import app, db, User, Category, Favorite
-# CORS 설정
-CORS(app)
-
-migrate = Migrate(app, db)
-
-# 엔드포인트 파일 임포트
 import login
 import register
 import generate_image
 import translate
 import search_log
 import game
+from Chat import chat_bp  # Chat 블루프린트 임포트
+
+# CORS 설정
+CORS(app)
+
+migrate = Migrate(app, db)
+
+# 블루프린트 등록
+app.register_blueprint(chat_bp)
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
@@ -33,7 +36,6 @@ def get_user_info(user_id):
         return jsonify(user_info)
     else:
         return jsonify({'error': 'User not found'}), 404
-
 
 @app.route('/add-favorite', methods=['POST'])
 def add_favorite():
@@ -55,7 +57,6 @@ def add_favorite():
     db.session.commit()
 
     return jsonify({"message": "Favorite added successfully!"})
-
 
 @app.route('/quiz-words/<user_id>', methods=['GET'])
 def get_quiz_words(user_id):
@@ -83,7 +84,6 @@ def delete_favorite(favorite_id):
         db.session.commit()
         return jsonify({"message": "Favorite deleted successfully!"})
     return jsonify({"error": "Favorite not found"}), 404
-
 
 if __name__ == '__main__':
     with app.app_context():

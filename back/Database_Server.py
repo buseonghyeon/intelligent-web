@@ -70,17 +70,11 @@ class Hs(db.Model):
     example_meaning = db.Column(db.String(256), nullable=True)
 
 
-class CustomWord(db.Model):
+class UserWords(db.Model):
+    __tablename__ = 'user_words'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(50), nullable=False)
-    english_word = db.Column(db.String(100), nullable=False)  # 컬럼 길이 늘림
-    korean_meaning = db.Column(db.String(100), nullable=False)
-    english_sentence = db.Column(db.String(300), nullable=False)  # 컬럼 길이 늘림
-    korean_sentence_meaning = db.Column(db.String(300), nullable=False)  # 컬럼 길이 늘림
-
-    def __init__(self, user_id, english_word, korean_meaning, english_sentence, korean_sentence_meaning):
-        self.user_id = user_id
-        self.english_word = english_word
-        self.korean_meaning = korean_meaning
-        self.english_sentence = english_sentence
-        self.korean_sentence_meaning = korean_sentence_meaning
+    user_id = db.Column(db.String(255), db.ForeignKey('user.id'), nullable=False)
+    word = db.Column(db.String(256), nullable=False)
+    meaning = db.Column(db.String(256), nullable=False)
+    example = db.Column(db.String(512), nullable=True)
+    example_meaning = db.Column(db.String(512), nullable=True)

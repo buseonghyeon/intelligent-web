@@ -7,7 +7,7 @@
     <list default="true" id="f1353cd1-c941-4e59-bc87-32c20747517b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/Chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/Chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/CreateWordToUSer.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/CreateWordToUSer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/generate_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/generate_image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/service-account.json" beforeDir="false" afterPath="$PROJECT_DIR$/back/service-account.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/speech-to-text.json" beforeDir="false" afterPath="$PROJECT_DIR$/back/speech-to-text.json" afterDir="false" />

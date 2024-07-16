@@ -67,3 +67,17 @@ body {
     color: red;
     margin-top: 20px;
 }
+/* Navbar 고정을 위한 여백 추가 */
+.page-container {
+    padding-top: 70px; /* Navbar의 높이만큼 여백 추가 */
+}
+
+/* search-container-home 부분의 스타일 수정 */
+.search-container-home {
+    margin-top: 70px; /* Navbar의 높이만큼 여백 추가 */
+}
+
+/* 기타 스타일 */
+.contain {
+    /* 기존 스타일 */
+}

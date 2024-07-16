@@ -54,3 +54,5 @@ def chat():
     except Exception as e:
         logging.error(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
+
+

@@ -44,10 +44,9 @@
 }
 
 .dark-mode-button {
-    margin-left: 10px;
+    margin-left: 20px; /* 버튼과 마지막 링크 사이의 간격을 조정하세요 */
     background: none;
     border: none;
-    font-size: 1.5em;
     cursor: pointer;
-    color: inherit;
+    font-size: 20px;
 }

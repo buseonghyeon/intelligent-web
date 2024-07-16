@@ -72,3 +72,7 @@ body {
 .pagination button:hover {
     background-color: #45a049;
 }
+
+.react-calendar__navigation__label__labelText{
+    font-size: 17px;
+}

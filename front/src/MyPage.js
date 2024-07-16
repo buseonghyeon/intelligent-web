@@ -8,9 +8,12 @@ const MyPage = () => {
     const [userInfo, setUserInfo] = useState({});
     const [favorites, setFavorites] = useState([]);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const userId = localStorage.getItem('userId');
     const navigate = useNavigate();
+
+    const itemsPerPage = 5; // 한 페이지에 표시할 즐겨찾기 개수
 
     useEffect(() => {
         if (!userId) {
@@ -50,6 +53,13 @@ const MyPage = () => {
         navigate('/MyStudy');
     };
 
+    const totalPages = Math.ceil(favorites.length / itemsPerPage);
+    const currentFavorites = favorites.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
     return (
         <>
             <Navbar />
@@ -67,13 +77,17 @@ const MyPage = () => {
                     <div className="favorites">
                         <h2>즐겨찾기</h2>
                         <ul>
-                            {favorites.map((favorite) => (
+                            {currentFavorites.map((favorite) => (
                                 <li key={favorite.id}>
                                     <strong>{favorite.word}</strong> - {favorite.korean}
                                     <button className="cancel" onClick={() => handleRemoveFavorite(favorite.id)}>★</button>
                                 </li>
                             ))}
                         </ul>
+                        <div className="pagination_mypage">
+                                        {currentPage > 1 && <button className="pm" onClick={() => handlePageChange(currentPage - 1)}>이전</button>}
+                                        {currentPage < totalPages && <button className="pm" onClick={() => handlePageChange(currentPage + 1)}>다음</button>}
+                        </div>
                     </div>
                 </div>
                 <div className="section">

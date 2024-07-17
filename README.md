@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png" style="width:608px; height:158px;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png">
 </div>
 <br/><br/>
 

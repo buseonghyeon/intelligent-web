@@ -1,4 +1,4 @@
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png" style="height:200px width:40%" ><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png" style="width:30%; height:200px" ><br/><br/>
 
 # LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 

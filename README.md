@@ -1,4 +1,4 @@
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo.png"><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png"><br/><br/>
 
 # LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 
@@ -50,7 +50,10 @@
 - **로그인:** 사용자 로그인 기능 구현<br/><br/><br/>
 
 📌 Chat<br/>
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png"><br/><br/>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat2.png" style="width: 49%;">
+</div><br/><br/>
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>
 
 📌 Word Management<br/>

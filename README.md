@@ -55,7 +55,7 @@
 
 📌 Chat<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%; height:235px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%; height:380px;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat2.png" style="width: 49%;">
 </div><br/><br/>
 

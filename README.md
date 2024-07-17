@@ -1,5 +1,5 @@
 
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png" style="width:608px; height:208px text-align:center" ><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo2.png" style="width:608px; height:208px; text-align:center;" ><br/><br/>
 
 # LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 

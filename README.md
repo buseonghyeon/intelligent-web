@@ -62,8 +62,8 @@
 
 📌 Word Management<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%; height:390px">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%; height:390px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%; height:200px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%; height:200px">
 </div><br/>
 
 - **단어 생성:** 사용자 맞춤형 단어 생성 기능<br/>
@@ -71,8 +71,8 @@
 
 📌 Charts and Search_log<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%; height:390px">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%; height:390px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%; height:200px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%; height:200px">
 </div><br/>
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/search1.png" style="width: 49%;">

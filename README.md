@@ -48,7 +48,6 @@
 📌 Chat<br/>
 <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png"><br/><br/>
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>
-- **채팅 기록:** 사용자의 채팅 기록을 저장 및 관리<br/><br/><br/>
 
 📌 Word Management<br/>
 <img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/fe2fd520-fee9-4f44-8473-cdeac31fc851"><br/><br/>

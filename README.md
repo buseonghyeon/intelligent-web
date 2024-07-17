@@ -26,7 +26,7 @@
 <br/><br/>
 
 ### 🗺 기술 설계도
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/flow.png"><br/><br/>
+<img width=100%, height=300px, src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/flow.png"><br/><br/>
 
 
 ### 💻 기술 스택

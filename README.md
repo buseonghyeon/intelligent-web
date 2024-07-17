@@ -51,7 +51,7 @@
 
 📌 Chat<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%; height:500px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%; height:400px">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat2.png" style="width: 49%;">
 </div><br/><br/>
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>

@@ -1,196 +1,36 @@
-# Intelligent Web Application
+# LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 
-This repository contains the code for the Intelligent Web application. The application is built using Flask for the backend and React for the frontend. It integrates various functionalities including user registration, login, image generation, chat, word creation, and word management.
-
-## Table of Contents
-- [Getting Started](#getting-started)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [File Descriptions](#file-descriptions)
-- [Frontend Components](#frontend-components)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Getting Started
-
-To get a local copy up and running, follow these simple steps.
-
-### Prerequisites
-
-Ensure you have the following installed:
-- Python 3.8 or higher
-- Node.js and npm
-- pip (Python package installer)
-- MySQL server
-
-### Installation
-
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/intelligent-web.git
-    cd intelligent-web
-    ```
-
-2. Create and activate a virtual environment:
-    ```sh
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3. Install the required Python packages:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-4. Set up the MySQL database:
-    - Create a database named `Intelligent-web-db`
-    - Update the database configuration in `Database_Server.py` with your MySQL credentials.
-
-5. Navigate to the `frontend` directory and install the required Node.js packages:
-    ```sh
-    cd frontend
-    npm install
-    ```
-
-6. Run the backend:
-    ```sh
-    flask run
-    ```
-
-7. Run the frontend:
-    ```sh
-    npm start
-    ```
-
-## Usage
-
-The application provides a web interface and various API endpoints for interacting with its features. The main functionalities include user authentication, image generation using OpenAI, chat functionality, word creation, and more.
-
-## API Endpoints
-
-### User Authentication
-
-- **Register**: `POST /register`
-    - Request: `{ "id": "user_id", "name": "name", "email": "email", "password": "password" }`
-    - Response: `{ "message": "User registered successfully" }`
-
-- **Login**: `POST /login`
-    - Request: `{ "id": "user_id", "password": "password" }`
-    - Response: `{ "message": "Login successful" }`
-
-### Image Generation
-
-- **Generate Image**: `POST /generate-image`
-    - Request: `{ "example_sentence": "sentence describing the image" }`
-    - Response: `{ "image_url": "generated image URL" }`
-
-### Chat
-
-- **Chat**: `POST /chat`
-    - Request: `multipart/form-data` with an audio file
-    - Response: `{ "text": "recognized text", "response": "chat response" }`
-
-### Word Management
-
-- **Create Word**: `POST /create-word`
-    - Request: `{ "userId": "user_id", "answers": { "age": "user age", "other_answers": "..." } }`
-    - Response: `{ "message": "Words created successfully!", "words": [ ... ] }`
-
-- **Get Custom Words**: `GET /custom`
-    - Request: `{ "userId": "user_id" }`
-    - Response: `[ { "word": "...", "meaning": "...", ... } ]`
-
-- **Get Words by Category and Day**: `GET /words/<category>/<day>`
-    - Request: `query param userId`
-    - Response: `[ { "word": "...", "meaning": "...", ... } ]`
-
-### Statistics and Logs
-
-- **Category Stats**: `GET /category-stats/<user_id>`
-    - Response: `[ { "category": "...", "count": ... } ]`
-
-- **Monthly Stats**: `GET /monthly-stats/<user_id>`
-    - Response: `[ { "month": "...", "count": ... } ]`
-
-- **Daily Stats**: `GET /daily-stats/<user_id>`
-    - Response: `[ { "date": "...", "count": ... } ]`
-
-- **Search Log**: `GET /search-log/<user_id>/<date>`
-    - Response: `[ { "korean": "...", "english": "...", ... } ]`
-
-## File Descriptions
-
-### Backend Files
-
-- **app.py**: Main entry point of the application, setting up routes and configurations.
-- **login.py**: Contains the user login functionality.
-- **register.py**: Contains the user registration functionality.
-- **generate_image.py**: Handles image generation requests using OpenAI.
-- **Chat.py**: Provides chat functionality using Google Cloud Speech-to-Text and OpenAI.
-- **CreateWordToUSer.py**: Manages the creation of custom words for users.
-- **search_log.py**: Contains endpoints for retrieving search logs and statistics.
-- **Database_Server.py**: Configures the database and defines the database models.
-- **translate.py**: Handles text translation requests using OpenAI.
-- **requirements.txt**: Lists the Python dependencies required for the project.
-
-### Frontend Files
-
-- **index.js**: Entry point for the React application, setting up routes and rendering the main app.
-- **Login.js**: Login and registration component.
-- **Home.js**: Home component with a search bar for translating text.
-- **WordDetail.js**: Displays detailed information about a word, including translations and example sentences.
-- **Game.js**: Mini game component where users can practice their vocabulary.
-- **MyPage.js**: User profile page showing user information and favorite words.
-- **MyStudy.js**: Page showing user study statistics and search logs.
-- **Chat.js**: Chat component for interacting with an AI chatbot.
-- **DarkModeContext.js**: Context provider for managing dark mode state.
-- **setupTests.js**: Configuration for setting up testing with Jest.
-- **reportWebVitals.js**: Measures performance metrics for the application.
-
-## Frontend Components
-
-### Footer
-
-A simple footer component.
-
-**File**: `Footer.js`
-```jsx
-import React from 'react';
-import '../css/Footer.css';
-
-const Footer = () => {
-    return (
-        <footer className="footer">
-            Footer Content
-        </footer>
-    );
-};
-
-export default Footer;
-```
-
-# 지능형 웹 애플리케이션
-
-이 저장소는 지능형 웹 애플리케이션의 코드를 포함하고 있습니다. 이 애플리케이션은 백엔드로 Flask를 사용하고 프론트엔드로 React를 사용하여 구축되었습니다. 사용자 등록, 로그인, 이미지 생성, 채팅, 단어 생성 및 단어 관리와 같은 다양한 기능을 통합하고 있습니다.
+이 저장소는 LLM(대형 언어 모델)을 활용한 맞춤형 외국어 학습 지원 시스템의 코드를 포함하고 있습니다. 이 시스템은 사용자 등록, 로그인, 이미지 생성, 채팅, 단어 생성 및 단어 관리와 같은 다양한 기능을 통합하여 사용자에게 맞춤형 학습 경험을 제공합니다.
 
 ## 목차
-- [시작하기](#시작하기)
-- [필수 조건](#필수-조건)
-- [설치](#설치)
-- [사용법](#사용법)
-- [API 엔드포인트](#api-엔드포인트)
-- [파일 설명](#파일-설명)
-- [프론트엔드 컴포넌트](#프론트엔드-컴포넌트)
-- [기여](#기여)
-- [라이선스](#라이선스)
+1. [프로젝트 개요](#프로젝트-개요)
+2. [개발 기간](#개발-기간)
+3. [개발 환경](#개발-환경)
+4. [설치 및 실행 방법](#설치-및-실행-방법)
+5. [API 엔드포인트](#api-엔드포인트)
+6. [파일 설명](#파일-설명)
+7. [프론트엔드 컴포넌트](#프론트엔드-컴포넌트)
+8. [기여](#기여)
+9. [라이선스](#라이선스)
 
-## 시작하기
+## 프로젝트 개요
 
-로컬에서 실행하려면 다음 간단한 단계를 따르세요.
+LLM을 활용한 맞춤형 외국어 학습 지원 시스템은 Flask와 React를 사용하여 구축된 웹 애플리케이션입니다. 이 애플리케이션은 사용자에게 맞춤형 학습 자료를 제공하고, 학습 성과를 추적하며, 다양한 학습 도구를 통해 외국어 학습을 지원합니다.
 
-### 필수 조건
+## 개발 기간
+
+2024.07.01 ~ 2024.07.17
+
+## 개발 환경
+
+- **프로그래밍 언어**: Python, JavaScript
+- **프레임워크**: Flask, React
+- **데이터베이스**: MySQL
+- **기타 툴**: Node.js, npm, pip
+
+## 설치 및 실행 방법
+
+### 전제 조건
 
 다음이 설치되어 있는지 확인하세요:
 - Python 3.8 이상
@@ -198,7 +38,71 @@ export default Footer;
 - pip (Python 패키지 관리자)
 - MySQL 서버
 
-### 설치
+#### `requirements.txt` 참고
+```txt
+aiohttp==3.9.5
+aiosignal==1.3.1
+alembic==1.13.2
+annotated-types==0.7.0
+anyio==4.4.0
+attrs==23.2.0
+bcrypt==4.1.3
+blinker==1.8.2
+cachetools==5.3.3
+certifi==2024.7.4
+charset-normalizer==3.3.2
+click==8.1.7
+colorama==0.4.6
+comtypes==1.4.5
+distro==1.9.0
+Flask==3.0.3
+Flask-Bcrypt==1.0.1
+Flask-Cors==4.0.1
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy==3.1.1
+frozenlist==1.4.1
+google-api-core==2.19.1
+google-auth==2.32.0
+google-cloud-speech==2.26.1
+google-cloud-texttospeech==2.16.4
+googleapis-common-protos==1.63.2
+greenlet==3.0.3
+grpcio==1.64.1
+grpcio-status==1.64.1
+h11==0.14.0
+httpcore==1.0.5
+httpx==0.27.0
+idna==3.7
+install==1.3.5
+itsdangerous==2.2.0
+Jinja2==3.1.4
+Mako==1.3.5
+MarkupSafe==2.1.5
+multidict==6.0.5
+openai==0.28.0
+pip==24.0
+proto-plus==1.24.0
+protobuf==5.27.2
+pyasn1==0.6.0
+pyasn1_modules==0.4.0
+pydantic==2.8.2
+pydantic_core==2.20.1
+PyMySQL==1.1.1
+pypiwin32==223
+pyttsx3==2.90
+pywin32==306
+requests==2.32.3
+rsa==4.9
+sniffio==1.3.1
+SQLAlchemy==2.0.31
+tqdm==4.66.4
+typing_extensions==4.12.2
+urllib3==2.2.2
+Werkzeug==3.0.3
+yarl==1.9.4
+```
+
+### 클론 받기
 
 1. 저장소를 클론합니다:
     ```sh
@@ -206,40 +110,40 @@ export default Footer;
     cd intelligent-web
     ```
 
-2. 가상 환경을 만들고 활성화합니다:
+### 설치
+
+1. 가상 환경을 만들고 활성화합니다:
     ```sh
     python3 -m venv venv
     source venv/bin/activate  # 윈도우에서는 `venv\Scripts\activate` 사용
     ```
 
-3. 필요한 Python 패키지를 설치합니다:
+2. 필요한 Python 패키지를 설치합니다:
     ```sh
     pip install -r requirements.txt
     ```
 
-4. MySQL 데이터베이스를 설정합니다:
+3. MySQL 데이터베이스를 설정합니다:
     - `Intelligent-web-db`라는 데이터베이스를 생성합니다.
     - `Database_Server.py` 파일의 MySQL 자격 증명 정보를 업데이트합니다.
 
-5. `frontend` 디렉토리로 이동하여 필요한 Node.js 패키지를 설치합니다:
+4. `frontend` 디렉토리로 이동하여 필요한 Node.js 패키지를 설치합니다:
     ```sh
     cd frontend
     npm install
     ```
 
-6. 백엔드를 실행합니다:
+### 실행
+
+1. 백엔드를 실행합니다:
     ```sh
     flask run
     ```
 
-7. 프론트엔드를 실행합니다:
+2. 프론트엔드를 실행합니다:
     ```sh
     npm start
     ```
-
-## 사용법
-
-이 애플리케이션은 웹 인터페이스와 다양한 API 엔드포인트를 제공하여 기능을 상호작용할 수 있습니다. 주요 기능으로는 사용자 인증, OpenAI를 사용한 이미지 생성, 채팅 기능, 단어 생성 등이 있습니다.
 
 ## API 엔드포인트
 
@@ -342,3 +246,4 @@ const Footer = () => {
 };
 
 export default Footer;
+```

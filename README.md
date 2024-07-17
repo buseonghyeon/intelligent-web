@@ -45,8 +45,8 @@
 
 📌 Login<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login1.png" style="width: 49%;">
-  <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login2.png" style="width: 49%;">
+  <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login1.png" style="width: 49%; height:390px">
+  <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login2.png" style="width: 49%; height:390px">
 </div><br/><br/>
 
 - **회원가입:** ID를 입력하여 회원가입을 진행<br/>
@@ -55,15 +55,15 @@
 📌 Chat<br/>
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png" style="width: 49%; height:390px">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat2.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat2.png" style="width: 49%; height:390px">
 </div><br/><br/>
 
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>
 
 📌 Word Management<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%; height:390px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%; height:390px">
 </div><br/>
 
 - **단어 생성:** 사용자 맞춤형 단어 생성 기능<br/>
@@ -71,8 +71,8 @@
 
 📌 Charts and Search_log<br/>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%;">
-  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%; height:390px">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%; height:390px">
 </div><br/>
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/search1.png" style="width: 49%;">

@@ -61,19 +61,25 @@
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>
 
 📌 Word Management<br/>
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/fe2fd520-fee9-4f44-8473-cdeac31fc851"><br/><br/>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%;">
+</div><br/><br/>>
+
 - **단어 생성:** 사용자 맞춤형 단어 생성 기능<br/>
 - **단어 관리:** 사용자 맞춤형 단어 관리 기능<br/><br/><br/>
 
-📌 Charts<br/>
+📌 Charts and Search_log<br/>
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%;">
-</div><br/><br/>
+</div><br/>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/search1.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/mypage.png" style="width: 49%;">
+</div><br/>
 
 - **학습 통계:** 사용자의 학습 통계 제공<br/>
-
-📌 Search_logs<br/>
 - **사용자 로그:** 사용자의 검색 로그 및 학습 활동 로그 제공<br/><br/><br/>
 
 ## ⚙️ 프로젝트 설치 및 실행 방법

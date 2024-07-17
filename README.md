@@ -169,6 +169,7 @@ const Footer = () => {
 };
 
 export default Footer;
+```
 
 # 지능형 웹 애플리케이션
 

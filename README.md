@@ -1,325 +1,249 @@
-# Intelligent Learning Platform
+# LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 
-Welcome to the Intelligent Learning Platform repository. This project is a web-based application designed to enhance English learning through various interactive features. Below, you will find an overview of the project structure, key functionalities, and instructions for setting up and running the application.
-
-## Table of Contents
-
-1. [Project Structure](#project-structure)
-2. [Features](#features)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [API Endpoints](#api-endpoints)
-6. [Contributing](#contributing)
-7. [License](#license)
-
-## Project Structure
-
-The project consists of the following files and directories:
-
-### Backend
-
-- `app.py`: Main application file that sets up the Flask server and integrates various modules.
-- `Chat.py`: Handles chat interactions, including speech-to-text and OpenAI GPT-3.5 based responses.
-- `CreateWordToUSer.py`: Manages the creation of custom word lists based on user input and OpenAI responses.
-- `Database_Server.py`: Contains database models and configurations.
-- `generate_image.py`: Endpoint for generating images using OpenAI.
-- `login.py`: Handles user login functionality.
-- `register.py`: Handles user registration functionality.
-- `search_log.py`: Provides endpoints for retrieving search logs and statistics.
-- `translate.py`: Manages translation services and related functionalities.
-- `game.py`: Contains logic for generating words for educational games.
-
-### Frontend
-
-- `WordDetail.js`: Component for displaying detailed information about words, including definitions and related images.
-- `Footer.js`: Footer component.
-- `Home.js`: Home component with search functionality.
-- `HomeMain.js`: Main content for the homepage, including category selection and daily learning progress.
-- `MainContent.js`: Contains slides for games and quizzes.
-- `Modal.js`: Modal component for displaying daily word lists.
-- `Navbar.js`: Navigation bar component with links to different sections of the app.
-- `QuestionModal.js`: Modal component for displaying and submitting custom learning questions.
-- `DarkModeContext.js`: Context for managing dark mode state.
-- `Login.js`: Login component with sign-in and sign-up forms.
-- `MyPage.js`: Component for displaying user information and favorites.
-- `MyStudy.js`: Component for displaying user's study statistics and logs.
-- `Game.js`: Mini-game component for interactive word learning.
-- `Chat.js`: Chat component for voice-based interaction with AI.
-- `setupTests.js`: Setup file for testing configuration.
-- `reportWebVitals.js`: File for reporting web vitals.
-
-## Features
-
-- **User Authentication**: Users can register and log in to their accounts.
-- **Chat Interaction**: Converts speech to text and provides intelligent responses using GPT-3.5.
-- **Word Creation**: Generates customized word lists for users based on their learning level.
-- **Image Generation**: Creates images from text descriptions using OpenAI.
-- **Translation**: Translates words between English and Korean with additional contextual information.
-- **Educational Games**: Provides interactive word games for enhancing learning.
-- **Search Logs and Statistics**: Tracks user search activities and provides statistical data.
-
-## Installation
-
-### Prerequisites
-
-- Python 3.8 or higher
-- Flask
-- OpenAI API key
-- Google Cloud credentials for speech-to-text functionality
-- MySQL database
-
-### Steps
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/IntelligentLearningPlatform.git
-    cd IntelligentLearningPlatform
-    ```
-
-2. Set up a virtual environment:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Configure environment variables:
-    - Set `OPENAI_API_KEY` to your OpenAI API key.
-    - Set `GOOGLE_APPLICATION_CREDENTIALS` to the path of your Google Cloud service account key file.
-
-5. Set up the database:
-    ```bash
-    flask db upgrade
-    ```
-
-6. Run the application:
-    ```bash
-    flask run
-    ```
-
-## Usage
-
-### User Registration and Login
-
-- **Register**: Send a POST request to `/register` with `id`, `name`, `email`, and `password`.
-- **Login**: Send a POST request to `/login` with `id` and `password`.
-
-### Chat Interaction
-
-- Send a POST request to `/chat` with an audio file to get a text response using GPT-3.5.
-
-### Word Creation
-
-- Send a POST request to `/create-word` with `userId` and `answers` to generate a customized word list.
-
-### Image Generation
-
-- Send a POST request to `/generate-image` with `example_sentence` to generate an image from the text.
-
-### Translation
-
-- Send a POST request to `/translate` with `userId` and `text` to translate between English and Korean.
-
-### Educational Games
-
-- Send a GET request to `/game-words` with `user_id` to retrieve words for games.
-
-### Search Logs and Statistics
-
-- Various endpoints are available to retrieve category stats, monthly stats, daily stats, and search logs.
-
-## API Endpoints
-
-| Endpoint                  | Method | Description                                           |
-|---------------------------|--------|-------------------------------------------------------|
-| `/register`               | POST   | Register a new user                                   |
-| `/login`                  | POST   | User login                                            |
-| `/chat`                   | POST   | Chat interaction                                      |
-| `/create-word`            | POST   | Create custom words                                   |
-| `/generate-image`         | POST   | Generate image from text                              |
-| `/translate`              | POST   | Translate text                                        |
-| `/game-words`             | GET    | Get words for games                                   |
-| `/category-stats/<user_id>`| GET    | Get category statistics                               |
-| `/monthly-stats/<user_id>` | GET    | Get monthly statistics                                |
-| `/daily-stats/<user_id>`   | GET    | Get daily statistics                                  |
-| `/search-log/<user_id>/<date>` | GET | Get search log for a specific date                    |
-
-## Contributing
-
-We welcome contributions from the community. Please read our contributing guidelines before making any changes.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-Thank you for using the Intelligent Learning Platform. If you have any questions or need further assistance, please feel free to contact us.
-
----
-
-# 지능형 학습 플랫폼
-
-지능형 학습 플랫폼 저장소에 오신 것을 환영합니다. 이 프로젝트는 다양한 인터랙티브 기능을 통해 영어 학습을 향상시키기 위해 설계된 웹 기반 응용 프로그램입니다. 아래에서 프로젝트 구조, 주요 기능 및 애플리케이션을 설정하고 실행하는 방법에 대한 개요를 확인할 수 있습니다.
+이 저장소는 LLM(대형 언어 모델)을 활용한 맞춤형 외국어 학습 지원 시스템의 코드를 포함하고 있습니다. 이 시스템은 사용자 등록, 로그인, 이미지 생성, 채팅, 단어 생성 및 단어 관리와 같은 다양한 기능을 통합하여 사용자에게 맞춤형 학습 경험을 제공합니다.
 
 ## 목차
-
-1. [프로젝트 구조](#프로젝트-구조)
-2. [기능](#기능)
-3. [설치](#설치)
-4. [사용법](#사용법)
+1. [프로젝트 개요](#프로젝트-개요)
+2. [개발 기간](#개발-기간)
+3. [개발 환경](#개발-환경)
+4. [설치 및 실행 방법](#설치-및-실행-방법)
 5. [API 엔드포인트](#api-엔드포인트)
-6. [기여](#기여)
-7. [라이선스](#라이선스)
+6. [파일 설명](#파일-설명)
+7. [프론트엔드 컴포넌트](#프론트엔드-컴포넌트)
+8. [기여](#기여)
+9. [라이선스](#라이선스)
 
-## 프로젝트 구조
+## 프로젝트 개요
 
-이 프로젝트는 다음 파일 및 디렉토리로 구성되어 있습니다:
+LLM을 활용한 맞춤형 외국어 학습 지원 시스템은 Flask와 React를 사용하여 구축된 웹 애플리케이션입니다. 이 애플리케이션은 사용자에게 맞춤형 학습 자료를 제공하고, 학습 성과를 추적하며, 다양한 학습 도구를 통해 외국어 학습을 지원합니다.
 
-### 백엔드
+## 개발 기간
 
-- `app.py`: Flask 서버를 설정하고 다양한 모듈을 통합하는 메인 애플리케이션 파일.
-- `Chat.py`: 음성-텍스트 변환 및 OpenAI GPT-3.5 기반 응답을 포함한 채팅 상호작용을 처리합니다.
-- `CreateWordToUSer.py`: 사용자 입력 및 OpenAI 응답을 기반으로 사용자 정의 단어 목록을 관리합니다.
-- `Database_Server.py`: 데이터베이스 모델 및 구성을 포함합니다.
-- `generate_image.py`: OpenAI를 사용하여 이미지를 생성하는 엔드포인트.
-- `login.py`: 사용자 로그인 기능을 처리합니다.
-- `register.py`: 사용자 등록 기능을 처리합니다.
-- `search_log.py`: 검색 로그 및 통계를 검색하는 엔드포인트를 제공합니다.
-- `translate.py`: 번역 서비스 및 관련 기능을 관리합니다.
-- `game.py`: 교육용 게임을 위해 단어를 생성하는 로직을 포함합니다.
+2024.07.01 ~ 2024.07.17
 
-### 프론트엔드
+## 개발 환경
 
-- `WordDetail.js`: 단어에 대한 정의 및 관련 이미지를 포함한 세부 정보를 표시하는 구성 요소.
-- `Footer.js`: 푸터 구성 요소.
-- `Home.js`: 검색 기능이 포함된 홈 구성 요소.
-- `HomeMain.js`: 카테고리 선택 및 일일 학습 진행을 포함한 홈페이지의 메인 콘텐츠.
-- `MainContent.js`: 게임 및 퀴즈 슬라이드를 포함합니다.
-- `Modal.js`: 일일 단어 목록을 표시하는 모달 구성 요소.
-- `Navbar.js`: 앱의 다른 섹션에 대한 링크가 있는 탐색 바 구성 요소.
-- `QuestionModal.js`: 사용자 정의 학습 질문을 표시하고 제출하는 모달 구성 요소.
-- `DarkModeContext.js`: 다크 모드 상태를 관리하기 위한 컨텍스트.
-- `Login.js`: 로그인 구성 요소로, 로그인 및 회원가입 양식 포함.
-- `MyPage.js`: 사용자 정보 및 즐겨찾기를 표시하는 구성 요소.
-- `MyStudy.js`: 사용자의 학습 통계 및 로그를 표시하는 구성 요소.
-- `Game.js`: 인터랙티브 단어 학습을 위한 미니게임 구성 요소.
-- `Chat.js`: AI와의 음성 기반 상호작용을 위한 채팅 구성 요소.
-- `setupTests.js`: 테스트 구성 설정 파일.
-- `reportWebVitals.js`: 웹 바이탈을 보고하는 파일.
+- **프로그래밍 언어**: Python, JavaScript
+- **프레임워크**: Flask, React
+- **데이터베이스**: MySQL
+- **기타 툴**: Node.js, npm, pip
 
-## 기능
-
-- **사용자 인증**: 사용자는 계정을 등록하고 로그인할 수 있습니다.
-- **채팅 상호작용**: 음성을 텍스트로 변환하고 GPT-3.5를 사용한 지능형 응답을 제공합니다.
-- **단어 생성**: 사용자의 학습 수준에 따라 맞춤형 단어 목록을 생성합니다.
-- **이미지 생성**: 텍스트 설명을 사용하여 이미지를 생성합니다(OpenAI 사용).
-- **번역**: 영어와 한국어 간의 단어를 추가적인 맥락 정보와 함께 번역합니다.
-- **교육용 게임**: 학습을 향상시키기 위한 인터랙티브 단어 게임을 제공합니다.
-- **검색 로그 및 통계**: 사용자 검색 활동을 추적하고 통계 데이터를 제공합니다.
-
-## 설치
+## 설치 및 실행 방법
 
 ### 전제 조건
 
+다음이 설치되어 있는지 확인하세요:
 - Python 3.8 이상
-- Flask
-- OpenAI API 키
-- 음성-텍스트 기능을 위한 Google Cloud 자격 증명
-- MySQL 데이터베이스
+- Node.js 및 npm
+- pip (Python 패키지 관리자)
+- MySQL 서버
 
-### 단계
+#### `requirements.txt` 참고
+```txt
+aiohttp==3.9.5
+aiosignal==1.3.1
+alembic==1.13.2
+annotated-types==0.7.0
+anyio==4.4.0
+attrs==23.2.0
+bcrypt==4.1.3
+blinker==1.8.2
+cachetools==5.3.3
+certifi==2024.7.4
+charset-normalizer==3.3.2
+click==8.1.7
+colorama==0.4.6
+comtypes==1.4.5
+distro==1.9.0
+Flask==3.0.3
+Flask-Bcrypt==1.0.1
+Flask-Cors==4.0.1
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy==3.1.1
+frozenlist==1.4.1
+google-api-core==2.19.1
+google-auth==2.32.0
+google-cloud-speech==2.26.1
+google-cloud-texttospeech==2.16.4
+googleapis-common-protos==1.63.2
+greenlet==3.0.3
+grpcio==1.64.1
+grpcio-status==1.64.1
+h11==0.14.0
+httpcore==1.0.5
+httpx==0.27.0
+idna==3.7
+install==1.3.5
+itsdangerous==2.2.0
+Jinja2==3.1.4
+Mako==1.3.5
+MarkupSafe==2.1.5
+multidict==6.0.5
+openai==0.28.0
+pip==24.0
+proto-plus==1.24.0
+protobuf==5.27.2
+pyasn1==0.6.0
+pyasn1_modules==0.4.0
+pydantic==2.8.2
+pydantic_core==2.20.1
+PyMySQL==1.1.1
+pypiwin32==223
+pyttsx3==2.90
+pywin32==306
+requests==2.32.3
+rsa==4.9
+sniffio==1.3.1
+SQLAlchemy==2.0.31
+tqdm==4.66.4
+typing_extensions==4.12.2
+urllib3==2.2.2
+Werkzeug==3.0.3
+yarl==1.9.4
+```
+
+### 클론 받기
 
 1. 저장소를 클론합니다:
-    ```bash
-    git clone https://github.com/yourusername/IntelligentLearningPlatform.git
-    cd IntelligentLearningPlatform
+    ```sh
+    git clone https://github.com/yourusername/intelligent-web.git
+    cd intelligent-web
     ```
 
-2. 가상 환경을 설정합니다:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # Windows에서는 `venv\Scripts\activate` 사용
+### 설치
+
+1. 가상 환경을 만들고 활성화합니다:
+    ```sh
+    python3 -m venv venv
+    source venv/bin/activate  # 윈도우에서는 `venv\Scripts\activate` 사용
     ```
 
-3. 종속성을 설치합니다:
-    ```bash
+2. 필요한 Python 패키지를 설치합니다:
+    ```sh
     pip install -r requirements.txt
     ```
 
-4. 환경 변수를 구성합니다:
-    - `OPENAI_API_KEY`를 OpenAI API 키로 설정합니다.
-    - `GOOGLE_APPLICATION_CREDENTIALS`를 Google Cloud 서비스 계정 키 파일의 경로로 설정합니다.
+3. MySQL 데이터베이스를 설정합니다:
+    - `Intelligent-web-db`라는 데이터베이스를 생성합니다.
+    - `Database_Server.py` 파일의 MySQL 자격 증명 정보를 업데이트합니다.
 
-5. 데이터베이스를 설정합니다:
-    ```bash
-    flask db upgrade
+4. `frontend` 디렉토리로 이동하여 필요한 Node.js 패키지를 설치합니다:
+    ```sh
+    cd frontend
+    npm install
     ```
 
-6. 애플리케이션을 실행합니다:
-    ```bash
+### 실행
+
+1. 백엔드를 실행합니다:
+    ```sh
     flask run
     ```
 
-## 사용법
-
-### 사용자 등록 및 로그인
-
-- **등록**: `id`, `name`, `email`, 및 `password`를 포함한 POST 요청을 `/register`로 보냅니다.
-- **로그인**: `id` 및 `password`를 포함한 POST 요청을 `/login`로 보냅니다.
-
-### 채팅 상호작용
-
-- 오디오 파일을 포함한 POST 요청을 `/chat`으로 보내 GPT-3.5를 사용한 텍스트 응답을 받습니다.
-
-### 단어 생성
-
-- `userId` 및 `answers`를 포함한 POST 요청을 `/create-word`로 보내 맞춤형 단어 목록을 생성합니다.
-
-### 이미지 생성
-
-- `example_sentence`를 포함한 POST 요청을 `/generate-image`로 보내 텍스트로부터 이미지를 생성합니다.
-
-### 번역
-
-- `userId` 및 `text`를 포함한 POST 요청을 `/translate`로 보내 영어와 한국어 간의 번역을 수행합니다.
-
-### 교육용 게임
-
-- 단어를 검색하기 위해 `user_id`를 포함한 GET 요청을 `/game-words`로 보냅니다.
-
-### 검색 로그 및 통계
-
-- 다양한 엔드포인트를 통해 카테고리 통계, 월별 통계, 일별 통계, 및 검색 로그를 검색할 수 있습니다.
+2. 프론트엔드를 실행합니다:
+    ```sh
+    npm start
+    ```
 
 ## API 엔드포인트
 
-| 엔드포인트                    | 메서드 | 설명                                                 |
-|-------------------------------|--------|------------------------------------------------------|
-| `/register`                   | POST   | 새로운 사용자 등록                                   |
-| `/login`                      | POST   | 사용자 로그인                                        |
-| `/chat`                       | POST   | 채팅 상호작용                                        |
-| `/create-word`                | POST   | 맞춤형 단어 생성                                     |
-| `/generate-image`             | POST   | 텍스트로부터 이미지 생성                             |
-| `/translate`                  | POST   | 텍스트 번역                                          |
-| `/game-words`                 | GET    | 게임을 위한 단어 가져오기                            |
-| `/category-stats/<user_id>`   | GET    | 카테고리 통계 가져오기                               |
-| `/monthly-stats/<user_id>`    | GET    | 월별 통계 가져오기                                   |
-| `/daily-stats/<user_id>`      | GET    | 일별 통계 가져오기                                   |
-| `/search-log/<user_id>/<date>`| GET    | 특정 날짜의 검색 로그 가져오기                       |
+### 사용자 인증
 
-## 기여
+- **등록**: `POST /register`
+    - 요청: `{ "id": "user_id", "name": "name", "email": "email", "password": "password" }`
+    - 응답: `{ "message": "User registered successfully" }`
 
-커뮤니티의 기여를 환영합니다. 변경 사항을 만들기 전에 기여 지침을 읽어보시기 바랍니다.
+- **로그인**: `POST /login`
+    - 요청: `{ "id": "user_id", "password": "password" }`
+    - 응답: `{ "message": "Login successful" }`
 
-## 라이선스
+### 이미지 생성
 
-이 프로젝트는 MIT 라이선스에 따라 라이선스가 부여됩니다. 자세한 내용은 LICENSE 파일을 참조하세요.
+- **이미지 생성**: `POST /generate-image`
+    - 요청: `{ "example_sentence": "sentence describing the image" }`
+    - 응답: `{ "image_url": "generated image URL" }`
 
----
+### 채팅
 
-지능형 학습 플랫폼을 사용해주셔서 감사합니다. 질문이나 추가 도움이 필요하시면 언제든지 연락 주시기 바랍니다.
+- **채팅**: `POST /chat`
+    - 요청: `multipart/form-data`로 오디오 파일을 포함
+    - 응답: `{ "text": "recognized text", "response": "chat response" }`
+
+### 단어 관리
+
+- **단어 생성**: `POST /create-word`
+    - 요청: `{ "userId": "user_id", "answers": { "age": "user age", "other_answers": "..." } }`
+    - 응답: `{ "message": "Words created successfully!", "words": [ ... ] }`
+
+- **맞춤형 단어 가져오기**: `GET /custom`
+    - 요청: `{ "userId": "user_id" }`
+    - 응답: `[ { "word": "...", "meaning": "...", ... } ]`
+
+- **카테고리 및 날짜별 단어 가져오기**: `GET /words/<category>/<day>`
+    - 요청: `query param userId`
+    - 응답: `[ { "word": "...", "meaning": "...", ... } ]`
+
+### 통계 및 로그
+
+- **카테고리 통계**: `GET /category-stats/<user_id>`
+    - 응답: `[ { "category": "...", "count": ... } ]`
+
+- **월별 통계**: `GET /monthly-stats/<user_id>`
+    - 응답: `[ { "month": "...", "count": ... } ]`
+
+- **일별 통계**: `GET /daily-stats/<user_id>`
+    - 응답: `[ { "date": "...", "count": ... } ]`
+
+- **검색 로그**: `GET /search-log/<user_id>/<date>`
+    - 응답: `[ { "korean": "...", "english": "...", ... } ]`
+
+## 파일 설명
+
+### 백엔드 파일
+
+- **app.py**: 애플리케이션의 메인 엔트리 포인트로, 라우트와 구성을 설정합니다.
+- **login.py**: 사용자 로그인 기능을 포함합니다.
+- **register.py**: 사용자 등록 기능을 포함합니다.
+- **generate_image.py**: OpenAI를 사용하여 이미지 생성 요청을 처리합니다.
+- **Chat.py**: Google Cloud Speech-to-Text 및 OpenAI를 사용하여 채팅 기능을 제공합니다.
+- **CreateWordToUSer.py**: 사용자 맞춤 단어 생성을 관리합니다.
+- **search_log.py**: 검색 로그와 통계를 가져오는 엔드포인트를 포함합니다.
+- **Database_Server.py**: 데이터베이스를 구성하고 데이터베이스 모델을 정의합니다.
+- **translate.py**: OpenAI를 사용하여 텍스트 번역 요청을 처리합니다.
+- **requirements.txt**: 프로젝트에 필요한 Python 종속성을 나열합니다.
+
+### 프론트엔드 파일
+
+- **index.js**: React 애플리케이션의 엔트리 포인트로, 라우트를 설정하고 메인 앱을 렌더링합니다.
+- **Login.js**: 로그인 및 등록 컴포넌트입니다.
+- **Home.js**: 텍스트 번역을 위한 검색 바가 포함된 홈 컴포넌트입니다.
+- **WordDetail.js**: 번역 및 예문을 포함한 단어의 자세한 정보를 표시합니다.
+- **Game.js**: 사용자가 어휘를 연습할 수 있는 미니 게임 컴포넌트입니다.
+- **MyPage.js**: 사용자 정보 및 즐겨찾기 단어를 보여주는 사용자 프로필 페이지입니다.
+- **MyStudy.js**: 사용자 학습 통계 및 검색 로그를 보여주는 페이지입니다.
+- **Chat.js**: AI 챗봇과 상호작용하기 위한 채팅 컴포넌트입니다.
+- **DarkModeContext.js**: 다크 모드 상태를 관리하는 컨텍스트 제공자입니다.
+- **setupTests.js**: Jest로 테스트를 설정하기 위한 구성 파일입니다.
+- **reportWebVitals.js**: 애플리케이션의 성능 메트릭을 측정합니다.
+
+## 프론트엔드 컴포넌트
+
+### 푸터
+
+간단한 푸터 컴포넌트입니다.
+
+**파일**: `Footer.js`
+```jsx
+import React from 'react';
+import '../css/Footer.css';
+
+const Footer = () => {
+    return (
+        <footer className="footer">
+            Footer Content
+        </footer>
+    );
+};
+
+export default Footer;
+```

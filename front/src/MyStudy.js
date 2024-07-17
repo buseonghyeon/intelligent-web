@@ -13,57 +13,71 @@ import Navbar from './components/Navbar';
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, ArcElement, Title, Tooltip, Legend);
 
 const MyStudy = () => {
-    const [date, setDate] = useState(new Date());
-    const [searchLogs, setSearchLogs] = useState([]);
-    const [categoryStats, setCategoryStats] = useState([]);
-    const [monthlyStats, setMonthlyStats] = useState([]);
-    const [dailyStats, setDailyStats] = useState([]);
-    const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    // 상태 변수 설정
+    const [date, setDate] = useState(new Date()); // 현재 선택된 날짜
+    const [searchLogs, setSearchLogs] = useState([]); // 검색 기록
+    const [categoryStats, setCategoryStats] = useState([]); // 카테고리 통계
+    const [monthlyStats, setMonthlyStats] = useState([]); // 월별 통계 (사용 안함)
+    const [dailyStats, setDailyStats] = useState([]); // 일별 통계
+    const [error, setError] = useState(null); // 오류 메시지
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+    const itemsPerPage = 5; // 페이지당 항목 수
 
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userId'); // 사용자 ID 가져오기
 
     useEffect(() => {
         if (!userId) {
+            // 사용자 ID가 없으면 오류 설정
             setError('User ID is missing. Please log in.');
             return;
         }
 
+        // 데이터 가져오기 함수
         const fetchData = async () => {
             try {
+                // 검색 기록 가져오기
                 const searchLogResponse = await axios.get(`http://localhost:5000/search-log/${userId}/${format(date, 'yyyy-MM-dd')}`);
+                // 중복 제거
                 const uniqueLogs = [...new Map(searchLogResponse.data.map(item => [item.english, item])).values()];
                 setSearchLogs(uniqueLogs);
 
+                // 카테고리 통계 가져오기
                 const categoryStatsResponse = await axios.get(`http://localhost:5000/category-stats/${userId}`);
                 setCategoryStats(categoryStatsResponse.data);
 
+                // 일별 통계 가져오기
                 const dailyStatsResponse = await axios.get(`http://localhost:5000/daily-stats/${userId}`);
                 setDailyStats(dailyStatsResponse.data);
-                console.log('Daily Stats:', dailyStatsResponse.data); // 데이터 확인
+                console.log('Daily Stats:', dailyStatsResponse.data); // 데이터 확인용 콘솔 로그
 
-                setError(null);
+                setError(null); // 오류 초기화
             } catch (err) {
                 setError('Error fetching data');
                 console.error(err);
             }
         };
 
-        fetchData();
-    }, [date, userId]);
+        fetchData(); // 데이터 가져오기 호출
+    }, [date, userId]); // 날짜 또는 사용자 ID가 변경될 때마다 실행
 
+    // 카테고리별 데이터 설정
     const categoryData = {
         labels: categoryStats.map(stat => stat.category),
         datasets: [
             {
                 label: 'Search Count',
                 data: categoryStats.map(stat => stat.count),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#E57373', '#BA68C8', '#FFD54F', '#4DD0E1', '#81C784', '#9575CD', '#FF8A65', '#4DB6AC', '#7986CB', '#F06292', '#64B5F6', '#DCE775', '#FFB74D', '#AED581']
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                    '#FF9F40', '#E57373', '#BA68C8', '#FFD54F', '#4DD0E1',
+                    '#81C784', '#9575CD', '#FF8A65', '#4DB6AC', '#7986CB',
+                    '#F06292', '#64B5F6', '#DCE775', '#FFB74D', '#AED581'
+                ]
             },
         ],
     };
 
+    // 일별 데이터 설정
     const dailyData = {
         labels: Array.from({ length: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() }, (_, i) => `${i + 1}`),
         datasets: [
@@ -82,6 +96,7 @@ const MyStudy = () => {
         ],
     };
 
+    // 일별 차트 옵션 설정
     const dailyOptions = {
         scales: {
             y: {
@@ -97,10 +112,12 @@ const MyStudy = () => {
         maintainAspectRatio: false,
     };
 
+    // 페이지 변경 핸들러
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
+    // 현재 페이지의 항목들
     const currentItems = searchLogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(searchLogs.length / itemsPerPage);
 

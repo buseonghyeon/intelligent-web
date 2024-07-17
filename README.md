@@ -44,7 +44,7 @@
 <div style="display: flex; justify-content: space-between;">
 <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login1.png">
 <img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login2.png">
-<div>
+</div>
 <br/><br/>
 - **회원가입:** ID를 입력하여 회원가입을 진행<br/>
 - **로그인:** 사용자 로그인 기능 구현<br/><br/><br/>

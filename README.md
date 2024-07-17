@@ -64,7 +64,7 @@
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word1.png" style="width: 49%;">
   <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/word2.png" style="width: 49%;">
-</div><br/><br/>>
+</div><br/>
 
 - **단어 생성:** 사용자 맞춤형 단어 생성 기능<br/>
 - **단어 관리:** 사용자 맞춤형 단어 관리 기능<br/><br/><br/>
@@ -114,7 +114,7 @@
 
 5. `frontend` 디렉토리로 이동하여 필요한 Node.js 패키지를 설치합니다:
     ```sh
-    cd frontend
+    cd front
     npm install
     ```
 
@@ -122,11 +122,13 @@
 
 1. 백엔드를 실행합니다:
     ```sh
-    flask run
+    cd back
+    python app.py
     ```
 
 2. 프론트엔드를 실행합니다:
     ```sh
+    cd front
     npm start
     ```
 

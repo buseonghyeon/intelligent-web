@@ -56,11 +56,13 @@
 - **단어 생성:** 사용자 맞춤형 단어 생성 기능<br/>
 - **단어 관리:** 사용자 맞춤형 단어 관리 기능<br/><br/><br/>
 
-📌 Statistics<br/>
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png"><b<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png"><br/><br/>
-r/><br/>
+📌 Charts<br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png"><img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png"><br/><br/>
+<br/><br/>
 <br/><br/>
 - **학습 통계:** 사용자의 학습 통계 제공<br/>
+
+📌 Search_logs<br/>
 - **사용자 로그:** 사용자의 검색 로그 및 학습 활동 로그 제공<br/><br/><br/>
 
 ## ⚙️ 프로젝트 설치 및 실행 방법

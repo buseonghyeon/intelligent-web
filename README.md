@@ -56,9 +56,11 @@
 - **단어 관리:** 사용자 맞춤형 단어 관리 기능<br/><br/><br/>
 
 📌 Charts<br/>
-<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png"><img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png"><br/><br/>
-<br/><br/>
-<br/><br/>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png" style="width: 49%;">
+  <img src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png" style="width: 49%;">
+</div><br/><br/>
+
 - **학습 통계:** 사용자의 학습 통계 제공<br/>
 
 📌 Search_logs<br/>

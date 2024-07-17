@@ -36,7 +36,7 @@
 
 ### ✨ 주요 기능 및 이미지
 📌 Home<br/>
-<img width=100% src=""C:\Users\syung-hyun\Documents\카카오톡 받은 파일\KakaoTalk_20240717_095635090.png""><br/><br/>
+<img width=100% src=https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/home.png><br/><br/>
 - **메뉴바:** 로고와 각종 기능들을 이용할 수 있는 메뉴 바 구현<br/>
 - **광고:** 사용자에게 어떻게 사용하는지와 사용하고 싶도록 디자인 구현<br/><br/><br/>
 

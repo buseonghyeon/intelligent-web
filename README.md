@@ -1,4 +1,4 @@
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/50824e8a-a125-4a48-aaad-b40ea2d8ffa5">
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/logo.png"><br/><br/>
 
 # LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 
@@ -41,7 +41,9 @@
 - **광고:** 사용자에게 어떻게 사용하는지와 사용하고 싶도록 디자인 구현<br/><br/><br/>
 
 📌 Account<br/>
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/2da2bd54-a770-4bd0-a697-6817690276a2"><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login1.png"><img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/login2.png"><br/><br/>
+<br/><br/>
+<br/><br/>
 - **회원가입:** ID를 입력하여 회원가입을 진행<br/>
 - **로그인:** 사용자 로그인 기능 구현<br/><br/><br/>
 
@@ -55,7 +57,9 @@
 - **단어 관리:** 사용자 맞춤형 단어 관리 기능<br/><br/><br/>
 
 📌 Statistics<br/>
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/a1237384-a054-4589-a2ba-5a715ca32427"><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart1.png"><b<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chart2.png"><br/><br/>
+r/><br/>
+<br/><br/>
 - **학습 통계:** 사용자의 학습 통계 제공<br/>
 - **사용자 로그:** 사용자의 검색 로그 및 학습 활동 로그 제공<br/><br/><br/>
 

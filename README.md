@@ -38,70 +38,6 @@ LLM을 활용한 맞춤형 외국어 학습 지원 시스템은 Flask와 React�
 - pip (Python 패키지 관리자)
 - MySQL 서버
 
-#### `requirements.txt` 참고
-```txt
-aiohttp==3.9.5
-aiosignal==1.3.1
-alembic==1.13.2
-annotated-types==0.7.0
-anyio==4.4.0
-attrs==23.2.0
-bcrypt==4.1.3
-blinker==1.8.2
-cachetools==5.3.3
-certifi==2024.7.4
-charset-normalizer==3.3.2
-click==8.1.7
-colorama==0.4.6
-comtypes==1.4.5
-distro==1.9.0
-Flask==3.0.3
-Flask-Bcrypt==1.0.1
-Flask-Cors==4.0.1
-Flask-Migrate==4.0.7
-Flask-SQLAlchemy==3.1.1
-frozenlist==1.4.1
-google-api-core==2.19.1
-google-auth==2.32.0
-google-cloud-speech==2.26.1
-google-cloud-texttospeech==2.16.4
-googleapis-common-protos==1.63.2
-greenlet==3.0.3
-grpcio==1.64.1
-grpcio-status==1.64.1
-h11==0.14.0
-httpcore==1.0.5
-httpx==0.27.0
-idna==3.7
-install==1.3.5
-itsdangerous==2.2.0
-Jinja2==3.1.4
-Mako==1.3.5
-MarkupSafe==2.1.5
-multidict==6.0.5
-openai==0.28.0
-pip==24.0
-proto-plus==1.24.0
-protobuf==5.27.2
-pyasn1==0.6.0
-pyasn1_modules==0.4.0
-pydantic==2.8.2
-pydantic_core==2.20.1
-PyMySQL==1.1.1
-pypiwin32==223
-pyttsx3==2.90
-pywin32==306
-requests==2.32.3
-rsa==4.9
-sniffio==1.3.1
-SQLAlchemy==2.0.31
-tqdm==4.66.4
-typing_extensions==4.12.2
-urllib3==2.2.2
-Werkzeug==3.0.3
-yarl==1.9.4
-```
-
 ### 클론 받기
 
 1. 저장소를 클론합니다:
@@ -137,11 +73,13 @@ yarl==1.9.4
 
 1. 백엔드를 실행합니다:
     ```sh
-    flask run
+    cd back
+    python app.py
     ```
 
 2. 프론트엔드를 실행합니다:
     ```sh
+    cd front
     npm start
     ```
 

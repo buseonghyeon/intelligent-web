@@ -1,3 +1,4 @@
+<div align="center">
 # LLM을 활용한 맞춤형 외국어 학습 지원 시스템
 
 LLM(대형 언어 모델)을 활용한 맞춤형 영단어 학습 지원 시스템의 코드를 포함하고 있습니다.
@@ -170,5 +171,7 @@ LLM을 활용한 맞춤형 외국어 학습 지원 시스템은 Flask와 React�
 - **DarkModeContext.js**: 다크 모드 상태를 관리하는 컨텍스트 제공자입니다.
 - **setupTests.js**: Jest로 테스트를 설정하기 위한 구성 파일입니다.
 - **reportWebVitals.js**: 애플리케이션의 성능 메트릭을 측정합니다.
+
+</div>
 
 

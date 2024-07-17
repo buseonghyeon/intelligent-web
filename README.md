@@ -23,7 +23,7 @@
 <br/><br/>
 
 ### 🗺 기술 설계도
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/b46445cc-97ab-4af1-a1a9-07443e14f6c6"><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/flow.png"><br/><br/>
 
 
 ### 💻 기술 스택
@@ -46,7 +46,7 @@
 - **로그인:** 사용자 로그인 기능 구현<br/><br/><br/>
 
 📌 Chat<br/>
-<img width=100% src="https://github.com/hkyuuu00/dev-mode/assets/155419559/244033d6-f968-43ae-af4b-cff67ab39ffd"><br/><br/>
+<img width=100% src="https://github.com/buseonghyeon/intelligent-web/blob/master/front/public/images/chat.png"><br/><br/>
 - **채팅:** 오디오 파일을 통한 AI 채팅 기능<br/>
 - **채팅 기록:** 사용자의 채팅 기록을 저장 및 관리<br/><br/><br/>
 
